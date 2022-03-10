@@ -109,7 +109,8 @@ C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreap
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Lab03_ED_2022.dll
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Lab03_ED_2022.pdb
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Lab03_ED_2022.genruntimeconfig.cache
-C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Index.cshtml.g.cs
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\ABB\AddNode.cshtml.g.cs
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\ABB\Index.cshtml.g.cs
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Create.cshtml.g.cs
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\bin\Debug\netcoreapp3.1\CsvHelper.dll
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Index.cshtml.g.cs

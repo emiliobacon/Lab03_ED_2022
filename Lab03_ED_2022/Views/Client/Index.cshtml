@@ -4,10 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>SAT</h1> @*cambio de nombre*@ 
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Registrar Nuevo</a> @*boton de crear cambiado para estar en espanol*@ 
+    <b>Cargar  desde CSV</b>
+</p>
+<form asp-controller="Client" asp-action="Index" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <br />
+    <br />
+    <button type="submit">Cargar</button>
+    <hr />
+</form>
+
+<p>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -34,32 +45,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarColor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarModel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SerialNo)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }) |    @*nombres cambiados para estar en espanol*@ 
-                @Html.ActionLink("Detalles", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarColor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarModel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SerialNo)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

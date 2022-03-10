@@ -1,18 +1,21 @@
-﻿using Lab03_ED_2022.Models;
+﻿using Lab03_ED_2022.BST;
+using Lab03_ED_2022.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.IO;
+using CsvHelper;
+using Lab03_ED_2022.Helpers;
 
 namespace Lab03_ED_2022.Controllers
 {
     public class ClientController : Controller
     {
-
-
-
         // GET: ClientController
         public ActionResult Index()
         {
-            return View(new ClientModel());
+            return View(Data.miArbolEmail);
         }
 
         // GET: ClientController/Details/5
@@ -34,7 +37,7 @@ namespace Lab03_ED_2022.Controllers
         {
             try
             {
-                var response = ClientModel.Save(new ClientModel
+                ClientModel.Save(new ClientModel
                 {
                     Id = int.Parse(collection["Id"]),
                     FullName = collection["FullName"],
@@ -43,14 +46,7 @@ namespace Lab03_ED_2022.Controllers
                     Email = collection["Email"],
                     SerialNo = collection["SerialNo"],
                 });
-
-                if (response)
-                {
-                    return View();
-                }
-                ViewBag["Error"] = "Error creando nuevo elemento";
-
-                return View();
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -99,5 +95,68 @@ namespace Lab03_ED_2022.Controllers
                 return View();
             }
         }
+
+        //leer csv
+        [HttpGet]
+        public IActionResult Index(BST<ClientModel> clients = null)
+        {
+            clients = clients == null ? new BST<ClientModel>() : clients;
+            return View(Data.miArbolEmail);
+        }
+
+        [HttpPost]
+        public IActionResult Index(IFormFile file, [FromServices] IHostingEnvironment hostingEnvironment)
+        {
+            // Upload CSV 
+            string fileName = $"{ hostingEnvironment.WebRootPath}\\files\\{file.FileName}";
+            using (FileStream fileStream = System.IO.File.Create(fileName))
+            {
+                file.CopyTo(fileStream);
+                fileStream.Flush();
+            }
+            //
+
+            var clients = this.GetClientList(file.FileName);
+            return Index(clients);
+        }
+
+        private BST<ClientModel> GetClientList(string fileName)
+        {
+            BST<ClientModel> client = new BST<ClientModel>(); //modificado aqui tambien 
+
+            // Read CSV
+            var path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + fileName;
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+                while (csv.Read())
+                {
+                    var clients = csv.GetRecord<ClientModel>(); //modificado aqui
+
+                    Data.miArbolEmail.InsertarNodo(clients, Comparison.Comparison.CompararEmail);
+                    Data.miArbolId.InsertarNodo(clients, Comparison.Comparison.CompararID);
+                    Data.miArbolSerial.InsertarNodo(clients, Comparison.Comparison.CompararSerial);
+                }
+            }
+            //
+
+            //// Create CSV
+
+            //path = $" {Directory.GetCurrentDirectory()}{@"\wwwroot\FilesTo"}";
+            //using (var write = new StreamWriter(path + "\\NewFile.csv"))
+            //using (var csv = new CsvWriter(write, CultureInfo.InvariantCulture))
+            //{
+            //    csv.WriteRecords(Data.miArbolEmail);
+            //    csv.WriteRecords(Data.miArbolId);
+            //    csv.WriteRecords(Data.miArbolSerial);
+            //}
+            ////
+
+            return client;
+
+        }
+
     }
 }

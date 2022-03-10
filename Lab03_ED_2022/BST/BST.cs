@@ -1,11 +1,12 @@
 ﻿using Lab03_ED_2022.Comparison;
+using Lab03_ED_2022.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Lab03_ED_2022.BST
 {
-    public class BST<T> 
+    public class BST<T> : IEnumerable<T>, IEnumerable
     {
         Nodo<T> raiz = new Nodo<T>();
         Nodo<T> actual = new Nodo<T>();
@@ -177,22 +178,18 @@ namespace Lab03_ED_2022.BST
             return raiz;
         }
 
-        public T InOrder()
+
+       
+
+        public IEnumerator<T> GetEnumerator()
         {
-            InOrder(raiz);
-            return (inOrder.Data);
+            Nodo<T> node =  raiz;
+            yield return raiz.Data;
         }
-        private T InOrder(Nodo<T> raiz)
+
+        IEnumerator IEnumerable.GetEnumerator()
         {
-
-            if (raiz != null)
-            {
-                InOrder(raiz.Izquierda);
-                inOrder.Data = raiz.Data;
-                InOrder(raiz.Derecha);
-
-            }
-            return inOrder.Data;
+            return GetEnumerator();
         }
     }
 }
