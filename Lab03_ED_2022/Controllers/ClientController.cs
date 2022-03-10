@@ -1,19 +1,18 @@
 ﻿using Lab03_ED_2022.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lab03_ED_2022.Controllers
 {
     public class ClientController : Controller
     {
+
+
+
         // GET: ClientController
         public ActionResult Index()
         {
-            return View(new ClientModel()) ;
+            return View(new ClientModel());
         }
 
         // GET: ClientController/Details/5
@@ -25,7 +24,7 @@ namespace Lab03_ED_2022.Controllers
         // GET: ClientController/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new ClientModel());
         }
 
         // POST: ClientController/Create
@@ -35,7 +34,23 @@ namespace Lab03_ED_2022.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var response = ClientModel.Save(new ClientModel
+                {
+                    Id = int.Parse(collection["Id"]),
+                    FullName = collection["FullName"],
+                    CarColor = collection["CarColor"],
+                    CarModel = collection["CarModel"],
+                    Email = collection["Email"],
+                    SerialNo = collection["SerialNo"],
+                });
+
+                if (response)
+                {
+                    return View();
+                }
+                ViewBag["Error"] = "Error creando nuevo elemento";
+
+                return View();
             }
             catch
             {
