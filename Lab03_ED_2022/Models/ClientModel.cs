@@ -28,5 +28,7 @@ namespace Lab03_ED_2022.Models
             Data.miArbolSerial.InsertarNodo(data, Comparison.Comparison.CompararSerial);
             return true;
         }
+
+        
     }
 }

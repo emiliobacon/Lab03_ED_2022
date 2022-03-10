@@ -4,22 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>
+    Ordenado por Correo Electrónico
+</h1>
 
-<p>
-    <b>Cargar  desde CSV</b>
-</p>
-<form asp-controller="Client" asp-action="Index" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <br />
-    <br />
-    <button type="submit">Cargar</button>
-    <hr />
-</form>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+
 <table class="table">
     <thead>
         <tr>

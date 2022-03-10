@@ -1,6 +1,5 @@
 ﻿using Lab03_ED_2022.Comparison;
-using Lab03_ED_2022.Helpers;
-using System;
+using Lab03_ED_2022.Pila;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,10 +20,10 @@ namespace Lab03_ED_2022.BST
         {
             Nodo<T> nuevoNodo = new Nodo<T>();
 
-           nuevoNodo.Data = data;
-           
+            nuevoNodo.Data = data;
 
-           
+
+
             if (raiz.Data == null)
             {
                 raiz = nuevoNodo;
@@ -62,22 +61,22 @@ namespace Lab03_ED_2022.BST
 
         }
 
-        public Nodo<T> Buscar(T valor, Compare<T> comparar)
+        public T Buscar(T valor, Compare<T> comparar)
         {
             return Buscar(valor, raiz, comparar);
         }
 
-        private Nodo<T> Buscar(T elemento, Nodo<T> raiz, Compare<T> comparar)
+        private  T Buscar(T elemento, Nodo<T> raiz, Compare<T> comparar)
         {
             actual = raiz;
 
             if (actual == null)
             {
-                return null;
+                return default(T);
             }
             else if (comparar(elemento, actual.Data) == 0)
             {
-                return actual;
+                return actual.Data;
             }
             else if (comparar(elemento, actual.Data) < 0)
             {
@@ -102,7 +101,7 @@ namespace Lab03_ED_2022.BST
 
         public bool BorrarNodo(T llave, Compare<T> comparar)
         {
-            tempBorrar = Buscar(llave, comparar);
+            tempBorrar.Data = Buscar(llave, comparar); //arreglar eliminacion 
 
             if (raiz != null)
             {
@@ -138,7 +137,7 @@ namespace Lab03_ED_2022.BST
 
                     tempBorrar.Data = maxNodo.Data;
 
-                    BorrarNodo((tempBorrar.Derecha), maxNodo.Data,comparar);
+                    BorrarNodo((tempBorrar.Derecha), maxNodo.Data, comparar);
 
                 }
                 return true;
@@ -179,20 +178,50 @@ namespace Lab03_ED_2022.BST
         }
 
 
-       
+        
 
         public IEnumerator<T> GetEnumerator()
         {
-            Nodo<T> node =  raiz;
-            yield return raiz.Data;
+            //if (raiz.Data != null)
+            //{
+
+            //    Pila<Nodo<T>> s = new Pila<Nodo<T>>();
+
+            //    Nodo<T> actual = raiz;
+
+
+            //    while (actual != null )
+            //    {
+            //        while (actual != null)
+            //        {
+            //            s.Insertar(actual);
+            //            actual = actual.Izquierda;
+            //        }
+
+            //        actual = s.Quitar();
+
+
+            //        yield return actual.Data;
+
+            //        actual = actual.Derecha;
+            //    }
+            //}
+
+            Nodo<T> valor = raiz;
+            yield return valor.Data;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+
+
     }
+
+
 }
+
 
 
 

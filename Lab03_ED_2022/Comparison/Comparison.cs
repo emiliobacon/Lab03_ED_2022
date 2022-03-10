@@ -5,6 +5,7 @@ namespace Lab03_ED_2022.Comparison
     public delegate int Compare<T>(T a, T b);
     public class Comparison
     {
+
         public static int CompareString(string a, string b)
         {
             if (a != b)
@@ -68,7 +69,7 @@ namespace Lab03_ED_2022.Comparison
         {
             if (a.SerialNo != b.SerialNo)
             {
-                if (a.Id < b.Id)
+                if (a.SerialNo.CompareTo(b.SerialNo) < 0)
                 {
                     return -1;
                 }
@@ -87,7 +88,7 @@ namespace Lab03_ED_2022.Comparison
         {
             if (a.Email != b.Email)
             {
-                if (a.Id < b.Id)
+                if (a.Email.CompareTo(b.Email) < 0)
                 {
                     return -1;
                 }
@@ -100,6 +101,26 @@ namespace Lab03_ED_2022.Comparison
             {
                 return 0;
             }
+        }
+
+        public static ClientModel CompararEmail(string a)
+        {
+            ClientModel parametro = new ClientModel();
+            parametro.Email = a;
+            return parametro;
+        }
+        public static ClientModel CompararSerial(string a)
+        {
+            ClientModel parametro = new ClientModel();
+            parametro.SerialNo = a;
+            return parametro;
+        }
+
+        public static ClientModel CompararID(int a)
+        {
+            ClientModel parametro = new ClientModel();
+            parametro.Id = a;
+            return parametro;
         }
     }
 }

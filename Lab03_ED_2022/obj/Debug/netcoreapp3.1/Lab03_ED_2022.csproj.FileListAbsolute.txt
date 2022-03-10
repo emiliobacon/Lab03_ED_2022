@@ -114,3 +114,10 @@ C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreap
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Create.cshtml.g.cs
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\bin\Debug\netcoreapp3.1\CsvHelper.dll
 C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Index.cshtml.g.cs
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Index2.cshtml.g.cs
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Index3.cshtml.g.cs
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Create3.cshtml.g.cs
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Create4.cshtml.g.cs
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Busqueda.cshtml.g.cs
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Create2.cshtml.g.cs
+C:\Users\emili\source\repos\2022\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\Create5.cshtml.g.cs

@@ -17,6 +17,106 @@ namespace Lab03_ED_2022.Controllers
         {
             return View(Data.miArbolEmail);
         }
+        public ActionResult Index2()
+        {
+            return View(Data.miArbolId);
+        }
+        public ActionResult Index3()
+        {
+            return View(Data.miArbolSerial);
+        }
+        
+        //busqueda por correo
+        public ActionResult Create2()
+        {
+            //formulario para busquedas
+            return View(new ClientModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create2(IFormCollection collection)
+        {
+            try
+            {
+                string parametro = (collection["Email"]);
+
+                return View(Data.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro),Comparison.Comparison.CompararEmail));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //busqueda por id
+        public ActionResult Create3()
+        {
+            //formulario para busquedas
+            return View(new ClientModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create3(IFormCollection collection)
+        {
+            try
+            {
+                int parametro = (int.Parse(collection["Id"]));
+
+                return View(Data.miArbolId.Buscar(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //busqueda por serial 
+        public ActionResult Create4()
+        {
+            //formulario para busquedas
+            return View(new ClientModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create4(IFormCollection collection)
+        {
+            try
+            {
+                string parametro = (collection["SerialNo"]);
+
+                return View(Data.miArbolSerial.Buscar(Comparison.Comparison.CompararSerial(parametro), Comparison.Comparison.CompararSerial));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //menu busqueda
+        public ActionResult Create5()
+        {
+            //formulario para busquedas
+            return View(new ClientModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create5(IFormCollection collection)
+        {
+            try
+            {
+                
+
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         // GET: ClientController/Details/5
         public ActionResult Details(int id)
