@@ -9,7 +9,8 @@ namespace Lab03_ED_2022.Helpers
 {
     public class Data
     {
-       public static BST<ClientModel> miArbolId = new BST<ClientModel>();
+       public static BST<ClientModel> miArbolId = new BST<ClientModel>(); //anadir singleton, quitar variable statica
+
        public static BST<ClientModel> miArbolSerial = new BST<ClientModel>();
        public static BST<ClientModel> miArbolEmail = new BST<ClientModel>();
     }

@@ -118,6 +118,29 @@ namespace Lab03_ED_2022.Controllers
             }
         }
 
+        //eliminacion 
+        //public ActionResult Create6()
+        //{
+        //    //formulario para busquedas
+        //    return View(new ClientModel());
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create6(IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        int parametro = (int.Parse(collection["Id"]));
+
+        //        return View(Data.miArbolEmail.BorrarNodo(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
         // GET: ClientController/Details/5
         public ActionResult Details(int id)
         {

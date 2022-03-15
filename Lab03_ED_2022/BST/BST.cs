@@ -7,12 +7,13 @@ namespace Lab03_ED_2022.BST
 {
     public class BST<T> : IEnumerable<T>, IEnumerable
     {
+
         Nodo<T> raiz = new Nodo<T>();
         Nodo<T> actual = new Nodo<T>();
         Nodo<T> tempPadre = new Nodo<T>();
         Nodo<T> tempBorrar = new Nodo<T>();
         Nodo<T> tempHijo = new Nodo<T>();
-        Nodo<T> inOrder = new Nodo<T>();
+        Nodo<T> sortOrder = new Nodo<T>();
 
         Nodo<T> maxNodo = new Nodo<T>();
 
@@ -24,7 +25,7 @@ namespace Lab03_ED_2022.BST
 
 
 
-            if (raiz.Data == null)
+            if (raiz.Data == null) //cambiar a  recursivo 
             {
                 raiz = nuevoNodo;
             }
@@ -66,7 +67,7 @@ namespace Lab03_ED_2022.BST
             return Buscar(valor, raiz, comparar);
         }
 
-        private  T Buscar(T elemento, Nodo<T> raiz, Compare<T> comparar)
+        private T Buscar(T elemento, Nodo<T> raiz, Compare<T> comparar)
         {
             actual = raiz;
 
@@ -99,58 +100,70 @@ namespace Lab03_ED_2022.BST
             return actual;
         }
 
-        public bool BorrarNodo(T llave, Compare<T> comparar)
-        {
-            tempBorrar.Data = Buscar(llave, comparar); //arreglar eliminacion 
+        ////public Nodo<T> BorrarNodo(T llave, Compare<T> comparar)
+        ////{
+        ////    tempBorrar.Data = Buscar(llave, comparar); //arreglar eliminacion 
 
-            if (raiz != null)
-            {
-                if ((tempBorrar.Izquierda == null) && (tempBorrar.Derecha == null))
-                {
-                    tempPadre = tempBorrar.Padre;
-                    if (tempBorrar == tempPadre.Izquierda)
-                    {
-                        tempPadre.Izquierda = null;
-                    }
-                    else
-                    {
-                        tempPadre.Derecha = null;
-                    }
-                }
-                else if ((tempBorrar.Izquierda == null) || (tempBorrar.Derecha == null))
-                {
-                    tempHijo = tempBorrar.Izquierda == null ? tempBorrar.Derecha : tempBorrar.Izquierda;
-                    tempPadre = tempBorrar.Padre;
-                    if (tempBorrar == tempPadre.Izquierda)
-                    {
-                        tempPadre.Izquierda = tempHijo;
-                    }
-                    else
-                    {
-                        tempPadre.Derecha = tempHijo;
-                    }
+        ////    if (raiz != null)
+        ////    {
+        ////        if (comparar(llave, raiz.Data) == -1)
+        ////        {
+        ////            raiz.Izquierda = BorrarNodo(raiz.Izquierda, llave);
+        ////        }
+        ////        else if (comparar(llave, raiz.Data) == 1)
+        ////        {
 
-                }
-                else if ((tempBorrar.Izquierda != null) && (tempBorrar.Derecha != null))
-                {
-                    maxNodo = Max(tempBorrar.Derecha);
+        ////        }
+        ////        else
+        ////        {
 
-                    tempBorrar.Data = maxNodo.Data;
+        ////        }
+        ////        if ((tempBorrar.Izquierda == null) && (tempBorrar.Derecha == null))
+        ////        {
+        ////            tempPadre = tempBorrar.Padre;
+        ////            if (comparar(tempBorrar.Data,tempPadre.Izquierda)==0)
+        ////            {
+        ////                tempPadre.Izquierda = null;
+        ////            }
+        ////            else
+        ////            {
+        ////                tempPadre.Derecha = null;
+        ////            }
+        ////        }
+        ////        else if ((tempBorrar.Izquierda == null) || (tempBorrar.Derecha == null))
+        ////        {
+        ////            tempHijo = tempBorrar.Izquierda == null ? tempBorrar.Derecha : tempBorrar.Izquierda;
+        ////            tempPadre = tempBorrar.Padre;
+        ////            if (tempBorrar == tempPadre.Izquierda)
+        ////            {
+        ////                tempPadre.Izquierda = tempHijo;
+        ////            }
+        ////            else
+        ////            {
+        ////                tempPadre.Derecha = tempHijo;
+        ////            }
 
-                    BorrarNodo((tempBorrar.Derecha), maxNodo.Data, comparar);
+        ////        }
+        ////        else if ((tempBorrar.Izquierda != null) && (tempBorrar.Derecha != null))
+        ////        {
+        ////            maxNodo = Max(tempBorrar.Derecha);
 
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        ////            tempBorrar.Data = maxNodo.Data;
+
+        ////            BorrarNodo((tempBorrar.Derecha), maxNodo.Data, comparar);
+
+        ////        }
+        ////        return true;
+        ////    }
+        ////    else
+        ////    {
+        ////        return false;
+        ////    }
 
 
 
 
-        }
+        ////}
 
         public Nodo<T> BorrarNodo(Nodo<T> raiz, T llave, Compare<T> comparar)
         {
@@ -178,6 +191,20 @@ namespace Lab03_ED_2022.BST
         }
 
 
+        public  T inOrder(Nodo<T> padre)
+        {
+            padre = raiz;
+
+            if (padre != null)
+            {
+                inOrder(padre.Izquierda);
+                 yield return = padre.Data;
+                inOrder(padre.Derecha);
+            }
+            return default(T);
+          
+        }
+         
         
 
         public IEnumerator<T> GetEnumerator()
@@ -207,8 +234,9 @@ namespace Lab03_ED_2022.BST
             //    }
             //}
 
-            Nodo<T> valor = raiz;
-            yield return valor.Data;
+            Nodo<T> nodo = raiz;
+
+            yield return nodo.Data;
         }
 
         IEnumerator IEnumerable.GetEnumerator()

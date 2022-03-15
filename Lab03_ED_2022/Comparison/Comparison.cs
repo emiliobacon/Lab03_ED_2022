@@ -1,11 +1,12 @@
-﻿using Lab03_ED_2022.Models;
+﻿using Lab03_ED_2022.BST;
+using Lab03_ED_2022.Models;
 
 namespace Lab03_ED_2022.Comparison
 {
     public delegate int Compare<T>(T a, T b);
-    public class Comparison
-    {
 
+    public class Comparison
+    { 
         public static int CompareString(string a, string b)
         {
             if (a != b)
@@ -122,6 +123,11 @@ namespace Lab03_ED_2022.Comparison
             parametro.Id = a;
             return parametro;
         }
+
+
+        
     }
+
+   
 }
 

@@ -13,7 +13,7 @@ namespace Lab03_ED_2022.Models
 
     public class ClientModel
     {
-        public int Id { get; set; }
+        public int Id { get; set; } //aumentar mas digitos
         public string Email { get; set; }
         public string FullName { get; set; }
         public string CarColor { get; set; }
