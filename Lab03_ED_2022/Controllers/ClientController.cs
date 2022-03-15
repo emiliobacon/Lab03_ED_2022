@@ -1,12 +1,12 @@
-﻿using Lab03_ED_2022.BST;
+﻿using CsvHelper;
+using Lab03_ED_2022.BST;
+using Lab03_ED_2022.Helpers;
 using Lab03_ED_2022.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using System.IO;
-using CsvHelper;
-using Lab03_ED_2022.Helpers;
 
 namespace Lab03_ED_2022.Controllers
 {
@@ -25,7 +25,7 @@ namespace Lab03_ED_2022.Controllers
         {
             return View(Data.miArbolSerial);
         }
-        
+
         //busqueda por correo
         public ActionResult Create2()
         {
@@ -41,7 +41,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["Email"]);
 
-                return View(Data.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro),Comparison.Comparison.CompararEmail));
+                return View(Data.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro), Comparison.Comparison.CompararEmail));
             }
             catch
             {
@@ -108,7 +108,7 @@ namespace Lab03_ED_2022.Controllers
         {
             try
             {
-                
+
 
                 return View();
             }

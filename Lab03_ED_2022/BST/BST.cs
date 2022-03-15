@@ -191,19 +191,19 @@ namespace Lab03_ED_2022.BST
         }
 
 
-        public  T inOrder(Nodo<T> padre)
-        {
-            padre = raiz;
+        //public  T inOrder(Nodo<T> padre)
+        //{
+        //    padre = raiz;
 
-            if (padre != null)
-            {
-                inOrder(padre.Izquierda);
-                 yield return = padre.Data;
-                inOrder(padre.Derecha);
-            }
-            return default(T);
+        //    if (padre != null)
+        //    {
+        //        inOrder(padre.Izquierda);
+        //         yield return = padre.Data;
+        //        inOrder(padre.Derecha);
+        //    }
+        //    return default(T);
           
-        }
+        //}
          
         
 
