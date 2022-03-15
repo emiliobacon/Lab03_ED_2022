@@ -3,5 +3,20 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Bienvenido SAT</h1> @*cambio para estar en espanol*@ 
+    <h1 class="display-4">Bienvenido SAT</h1> @*cambio para estar en espanol*@
+
+    <p>
+        <b>Cargar  desde CSV</b>
+    </p>
+    <form asp-controller="Client" asp-action="Index" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <br />
+        <br />
+        <button type="submit">Cargar</button>
+        <hr />
+    </form>
+
+
+
+
 </div>
