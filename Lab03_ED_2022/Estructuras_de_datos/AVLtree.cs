@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab03_ED_2022.Comparison;
+using Lab03_ED_2022.Pila;
 
 
 namespace Lab03_ED_2022.Estructuras_de_datos
@@ -47,11 +48,11 @@ namespace Lab03_ED_2022.Estructuras_de_datos
                     //Factor de balanceo
                     if (this.node_Height(actualroot.right) - this.node_Height(actualroot.left) == -2)
                     {
-                        //Entra a rotacion izquierda
+                        //Entra a rotacion simple derecha
                         if (comparar(newNode.value,actualroot.left.value) < 0)
                         {
-                            //Entra a rotacion L
-                            actualroot = this.left_Rotation(actualroot);
+                            //Si L-L Rotación simple derecha
+                            actualroot = this.right_Rotation(actualroot);
                         }
                         else //rotacion left-right
                         {
@@ -59,16 +60,16 @@ namespace Lab03_ED_2022.Estructuras_de_datos
                         }
                     }
                 }
-                else if (comparar(newNode.value,actualroot.value) > 0)
+                else if (comparar(newNode.value,actualroot.value) > 0) //cuando es mayor
                 {
                     actualroot.right = this.insertNode(actualroot.right, newNode, comparar);//se manda a la nodo derecho
-                    if (this.node_Height(actualroot.right) - this.node_Height(actualroot.left) == 2)
+                    if (this.node_Height(actualroot.right) - this.node_Height(actualroot.left) == 2) //validaciones de balanceo
                     {
-                        //Entra a rotacion derecha
+                        //Entra a rotacion izquierda
                         if (comparar(newNode.value, actualroot.right.value) > 0)
                         {
-                            //Entra a rotacion R
-                            actualroot = this.right_Rotation(actualroot);
+                            //Entra a rotacion izquerda 
+                            actualroot = this.left_Rotation(actualroot);
                         }
                         else //rotacion right - left
                         {
@@ -113,7 +114,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
         }
 
         //Rotaciones
-        public AVLnode<T> left_Rotation(AVLnode<T> node) //rotacion simple izquierda
+        public AVLnode<T> right_Rotation(AVLnode<T> node) //rotacion simple izquierda
         {
             AVLnode<T> aux_Node = node.left;
             node.left = aux_Node.right;
@@ -122,7 +123,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             aux_Node.height = this.max_Height(node.height, this.node_Height(node.left)) + 1;
             return aux_Node;
         }
-        public AVLnode<T> right_Rotation(AVLnode<T> node) //rotacion simple derecha
+        public AVLnode<T> left_Rotation(AVLnode<T> node) //rotacion simple derecha
         {
             AVLnode<T> aux_Node = node.right;
             node.right = aux_Node.left;
@@ -133,14 +134,14 @@ namespace Lab03_ED_2022.Estructuras_de_datos
         }
         public AVLnode<T> left_Right_Rotation(AVLnode<T> node) //rotacion izquierda - derecha
         {
-            node.left = this.right_Rotation(node.left);
-            AVLnode<T> aux_Node = this.left_Rotation(node);
+            node.left = this.left_Rotation(node.left);
+            AVLnode<T> aux_Node = this.right_Rotation(node);
             return aux_Node;
         }
         public AVLnode<T> right_Left_Rotation(AVLnode<T> node) //rotacion derecha - izquierda
         {
-            node.right = this.left_Rotation(node.right);
-            AVLnode<T> aux_Node = this.right_Rotation(node);
+            node.right = this.right_Rotation(node.right);
+            AVLnode<T> aux_Node = this.left_Rotation(node);
             return aux_Node;
         }
 
@@ -170,35 +171,26 @@ namespace Lab03_ED_2022.Estructuras_de_datos
                 return Buscar(elemento, aux_Node.right, comparar);
             }
         }
+
+        private void InOrder(AVLnode<T> root, ref Pila<T> queue)
+        {
+            if(root != null)
+            {
+                InOrder(root.left, ref queue);
+                queue.Insertar(root.value);
+                InOrder(root.right, ref queue);
+
+            }
+        }
         public IEnumerator<T> GetEnumerator()
         {
-            //if (raiz.Data != null)
-            //{
+            var queue = new Pila<T>();
+            InOrder(this.root, ref queue);
 
-            //    Pila<Nodo<T>> s = new Pila<Nodo<T>>();
-
-            //    Nodo<T> actual = raiz;
-
-
-            //    while (actual != null )
-            //    {
-            //        while (actual != null)
-            //        {
-            //            s.Insertar(actual);
-            //            actual = actual.Izquierda;
-            //        }
-
-            //        actual = s.Quitar();
-
-
-            //        yield return actual.Data;
-
-            //        actual = actual.Derecha;
-            //    }
-            //}
-
-            AVLnode<T> valor = root;
-            yield return valor.value;
+            while (!queue.IsEmpty())
+            {
+                yield return queue.QuitarUltimo();
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

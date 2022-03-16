@@ -17,17 +17,28 @@ namespace Lab03_ED_2022.Pila
             Cabeza = Nuevo;
         }
 
-        public T Quitar()
+        public T QuitarUltimo()
         {
-            if (Cabeza == null)
+            NodoPila<T> aux = new NodoPila<T>();
+            aux.Data = Cabeza.Data;
+            if (Cabeza != null)
             {
-                return default(T);
+                if (aux.Siguiente == null)
+                {
+                    Cabeza = null;
+                    return aux.Data;
+                }
+                while (aux.Siguiente.Siguiente != null)
+                {
+                    aux = aux.Siguiente;
+                }
+                aux.Siguiente = null;
+                return aux.Data;
             }
-            T Retorno = Cabeza.Data;
-            NodoPila<T> Top = Cabeza;
-            Cabeza = Cabeza.Siguiente;
-            
-            return Retorno;
+            else
+            {
+                return default (T);
+            }
         }
 
         public int Size()
@@ -38,6 +49,11 @@ namespace Lab03_ED_2022.Pila
                 Cantidad++;
             }
             return Cantidad;
+        }
+
+        public bool IsEmpty()
+        {
+            return (Cabeza == null);
         }
     }
 }
