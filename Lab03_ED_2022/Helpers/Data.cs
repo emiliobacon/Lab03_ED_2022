@@ -1,12 +1,16 @@
 ﻿using Lab03_ED_2022.BST;
 using Lab03_ED_2022.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Lab03_ED_2022.Estructuras_de_datos;
 
 namespace Lab03_ED_2022.Helpers
 {
     public class Data
     {
         private static Data _instance = null;
-
         public static Data Instance
         {
             get
@@ -36,7 +40,22 @@ namespace Lab03_ED_2022.Helpers
         };
 
 
+        public AVLtree<ClientModel> miArbolAvlId = new AVLtree<ClientModel> 
+        {
+            comparar = Comparison.Comparison.CompararID
+        };
+
+        public AVLtree<ClientModel> miArbolAvlSerial = new AVLtree<ClientModel> 
+        {
+            comparar = Comparison.Comparison.CompararSerial
+        };
+        public AVLtree<ClientModel> miArbolAvlEmail = new AVLtree<ClientModel>
+        {
+            comparar = Comparison.Comparison.CompararEmail
+        };
+
+
     }
-
-
+    
+    
 }

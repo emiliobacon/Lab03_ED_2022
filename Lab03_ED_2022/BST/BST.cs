@@ -1,4 +1,5 @@
 ﻿using Lab03_ED_2022.Comparison;
+using Lab03_ED_2022.Estructura_de_Datos;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,38 +21,49 @@ namespace Lab03_ED_2022.BST
         public void InsertarNodo(T data)
         {
             Nodo<T> nuevoNodo = new Nodo<T>();
+
             nuevoNodo.Data = data;
 
-            if (raiz.Data == null)
+
+
+            if (raiz.Data == null) //cambiar a  recursivo 
             {
                 raiz = nuevoNodo;
             }
             else
             {
-                raiz = this.InsertarNodo(raiz, nuevoNodo);
+                actual = raiz;
+
+                while (true)
+                {
+                    tempPadre = actual;
+
+                    if (comparar(nuevoNodo.Data, actual.Data) < 0)
+                    {
+                        actual = actual.Izquierda;
+                        if (actual == null)
+                        {
+                            tempPadre.Izquierda = nuevoNodo;
+                            nuevoNodo.Padre = tempPadre;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        actual = actual.Derecha;
+                        if (actual == null)
+                        {
+                            tempPadre.Derecha = nuevoNodo;
+                            nuevoNodo.Padre = tempPadre;
+                            return;
+                        }
+                    }
+                }
             }
+
         }
 
-        private Nodo<T> InsertarNodo(Nodo<T> raizActual, Nodo<T> nuevoNodo)
-        {
-            if (raizActual != null)
-            {
-                if (comparar(raizActual.Data, raizActual.Data)<0)
-                {
-                    raizActual.Izquierda = InsertarNodo(raizActual.Izquierda, nuevoNodo);
-                }
-                else if (comparar(raizActual.Data,raizActual.Data)>0)
-                {
-                    raizActual.Derecha = InsertarNodo(raizActual.Derecha, nuevoNodo);
-                }
-                return raizActual;
-            }
-            else
-            {
-                raizActual = nuevoNodo;
-                return raizActual;
-            }
-        }
+
 
         public T Buscar(T valor)
         {
@@ -182,15 +194,31 @@ namespace Lab03_ED_2022.BST
         }
 
 
+        private void InOrder(Nodo<T> padre, ref ColaRecorrido<T> queue)
+        {
+
+            if (padre != null)
+            {
+                InOrder(padre.Izquierda, ref queue);
+                queue.Encolar(padre.Data);
+                InOrder(padre.Derecha, ref queue);
+            }
+            return;
+        }
 
 
 
 
         public IEnumerator<T> GetEnumerator()
         {
-            Nodo<T> nodo = raiz;
+            var queue = new ColaRecorrido<T>();
+            InOrder(raiz, ref queue);
 
-            yield return nodo.Data;
+            while (!queue.ColaVacia())
+            {
+                yield return queue.DesEncolar();
+            }
+
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -198,10 +226,9 @@ namespace Lab03_ED_2022.BST
             return GetEnumerator();
         }
 
+        //actualizado 
 
     }
-
-
 }
 
 

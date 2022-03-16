@@ -25,7 +25,7 @@ namespace Lab03_ED_2022.Controllers
         {
             return View(Data.Instance.miArbolSerial);
         }
-
+       
         //busqueda por correo
         public ActionResult Create2()
         {
@@ -48,6 +48,7 @@ namespace Lab03_ED_2022.Controllers
                 return View();
             }
         }
+
 
         //busqueda por id
         public ActionResult Create3()
@@ -95,6 +96,108 @@ namespace Lab03_ED_2022.Controllers
             }
         }
 
+        public ActionResult Index4()
+        {
+            return View(Data.Instance.miArbolAvlId);
+        }
+        public ActionResult Index5()
+        {
+            return View(Data.Instance.miArbolAvlEmail);
+        }
+        public ActionResult Index6()
+        {
+            return View(Data.Instance.miArbolAvlSerial);
+        }
+        public ActionResult CreateAvl()
+        {
+            return View(new ClientModel());
+        }
+
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAvl(IFormCollection collection)
+        {
+            try
+            {
+                ClientModel.SaveAVLMode(new ClientModel
+                {
+                    Id = int.Parse(collection["Id"]),
+                    FullName = collection["FullName"],
+                    CarColor = collection["CarColor"],
+                    CarModel = collection["CarModel"],
+                    Email = collection["Email"],
+                    SerialNo = collection["SerialNo"],
+                });
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult CreateavlId()
+        {
+            return View(new ClientModel());
+        }
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateavlId(IFormCollection collection)
+        {
+            try
+            {
+                int parametro = (int.Parse(collection["Id"]));
+
+                return View(Data.Instance.miArbolAvlId.Buscar(Comparison.Comparison.CompararID(parametro)));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult CreateavlSerial()
+        {
+            return View(new ClientModel());
+        }
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateavlSerial(IFormCollection collection)
+        {
+            try
+            {
+                string parametro = (collection["SerialNo"]);
+
+                return View(Data.Instance.miArbolAvlSerial.Buscar(Comparison.Comparison.CompararSerial(parametro)));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult CreateavlEmail()
+        {
+            return View(new ClientModel());
+        }
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateavlEmail(IFormCollection collection)
+        {
+            try
+            {
+                string parametro = (collection["Email"]);
+
+                return View(Data.Instance.miArbolAvlEmail.Buscar(Comparison.Comparison.CompararEmail(parametro)));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
         //menu busqueda
         public ActionResult Create5()
         {
@@ -105,6 +208,28 @@ namespace Lab03_ED_2022.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create5(IFormCollection collection)
+        {
+            try
+            {
+
+
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Create7()
+        {
+            //formulario para busquedas
+            return View(new ClientModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create7(IFormCollection collection)
         {
             try
             {
@@ -176,8 +301,6 @@ namespace Lab03_ED_2022.Controllers
                 return View();
             }
         }
-
-       
 
         // GET: ClientController/Edit/5
         public ActionResult Edit(int id)
@@ -264,12 +387,14 @@ namespace Lab03_ED_2022.Controllers
                     Data.Instance.miArbolId.InsertarNodo(clients);
                     Data.Instance.miArbolSerial.InsertarNodo(clients);
 
+                    //arbol avl
 
-                    
+                    Data.Instance.miArbolAvlEmail.insert(clients);
+                    Data.Instance.miArbolAvlId.insert(clients);
+                    Data.Instance.miArbolAvlSerial.insert(clients);
                 }
             }
-            //
-
+            
             //// Create CSV
 
             //path = $" {Directory.GetCurrentDirectory()}{@"\wwwroot\FilesTo"}";
