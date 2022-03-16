@@ -15,17 +15,17 @@ namespace Lab03_ED_2022.Controllers
         // GET: ClientController
         public ActionResult Index()
         {
-            return View(Data.miArbolEmail);
+            return View(Data.Instance.miArbolEmail);
         }
         public ActionResult Index2()
         {
-            return View(Data.miArbolId);
+            return View(Data.Instance.miArbolId);
         }
         public ActionResult Index3()
         {
-            return View(Data.miArbolSerial);
+            return View(Data.Instance.miArbolSerial);
         }
-
+       
         //busqueda por correo
         public ActionResult Create2()
         {
@@ -41,13 +41,14 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["Email"]);
 
-                return View(Data.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro), Comparison.Comparison.CompararEmail));
+                return View(Data.Instance.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro), Comparison.Comparison.CompararEmail));
             }
             catch
             {
                 return View();
             }
         }
+
 
         //busqueda por id
         public ActionResult Create3()
@@ -64,7 +65,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 int parametro = (int.Parse(collection["Id"]));
 
-                return View(Data.miArbolId.Buscar(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
+                return View(Data.Instance.miArbolId.Buscar(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
             }
             catch
             {
@@ -87,13 +88,115 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["SerialNo"]);
 
-                return View(Data.miArbolSerial.Buscar(Comparison.Comparison.CompararSerial(parametro), Comparison.Comparison.CompararSerial));
+                return View(Data.Instance.miArbolSerial.Buscar(Comparison.Comparison.CompararSerial(parametro), Comparison.Comparison.CompararSerial));
             }
             catch
             {
                 return View();
             }
         }
+
+        public ActionResult Index4()
+        {
+            return View(Data.Instance.miArbolAvlId);
+        }
+        public ActionResult Index5()
+        {
+            return View(Data.Instance.miArbolAvlEmail);
+        }
+        public ActionResult Index6()
+        {
+            return View(Data.Instance.miArbolAvlSerial);
+        }
+        public ActionResult CreateAvl()
+        {
+            return View(new ClientModel());
+        }
+
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAvl(IFormCollection collection)
+        {
+            try
+            {
+                ClientModel.SaveAVLMode(new ClientModel
+                {
+                    Id = int.Parse(collection["Id"]),
+                    FullName = collection["FullName"],
+                    CarColor = collection["CarColor"],
+                    CarModel = collection["CarModel"],
+                    Email = collection["Email"],
+                    SerialNo = collection["SerialNo"],
+                });
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult CreateavlId()
+        {
+            return View(new ClientModel());
+        }
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateavlId(IFormCollection collection)
+        {
+            try
+            {
+                int parametro = (int.Parse(collection["Id"]));
+
+                return View(Data.Instance.miArbolAvlId.Buscar(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult CreateavlSerial()
+        {
+            return View(new ClientModel());
+        }
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateavlSerial(IFormCollection collection)
+        {
+            try
+            {
+                string parametro = (collection["SerialNo"]);
+
+                return View(Data.Instance.miArbolAvlSerial.Buscar(Comparison.Comparison.CompararSerial(parametro), Comparison.Comparison.CompararSerial));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult CreateavlEmail()
+        {
+            return View(new ClientModel());
+        }
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateavlEmail(IFormCollection collection)
+        {
+            try
+            {
+                string parametro = (collection["Email"]);
+
+                return View(Data.Instance.miArbolAvlEmail.Buscar(Comparison.Comparison.CompararEmail(parametro), Comparison.Comparison.CompararEmail));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
 
         //menu busqueda
         public ActionResult Create5()
@@ -105,6 +208,28 @@ namespace Lab03_ED_2022.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create5(IFormCollection collection)
+        {
+            try
+            {
+
+
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Create7()
+        {
+            //formulario para busquedas
+            return View(new ClientModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create7(IFormCollection collection)
         {
             try
             {
@@ -224,7 +349,7 @@ namespace Lab03_ED_2022.Controllers
         public IActionResult Index(BST<ClientModel> clients = null)
         {
             clients = clients == null ? new BST<ClientModel>() : clients;
-            return View(Data.miArbolEmail);
+            return View(Data.Instance.miArbolEmail);
         }
 
         [HttpPost]
@@ -258,13 +383,18 @@ namespace Lab03_ED_2022.Controllers
                 {
                     var clients = csv.GetRecord<ClientModel>(); //modificado aqui
 
-                    Data.miArbolEmail.InsertarNodo(clients, Comparison.Comparison.CompararEmail);
-                    Data.miArbolId.InsertarNodo(clients, Comparison.Comparison.CompararID);
-                    Data.miArbolSerial.InsertarNodo(clients, Comparison.Comparison.CompararSerial);
+                    Data.Instance.miArbolEmail.InsertarNodo(clients, Comparison.Comparison.CompararEmail);
+                    Data.Instance.miArbolId.InsertarNodo(clients, Comparison.Comparison.CompararID);
+                    Data.Instance.miArbolSerial.InsertarNodo(clients, Comparison.Comparison.CompararSerial);
+
+                    //arbol avl
+
+                    Data.Instance.miArbolAvlEmail.insert(clients, Comparison.Comparison.CompararEmail);
+                    Data.Instance.miArbolAvlId.insert(clients, Comparison.Comparison.CompararID);
+                    Data.Instance.miArbolAvlSerial.insert(clients, Comparison.Comparison.CompararSerial);
                 }
             }
-            //
-
+            
             //// Create CSV
 
             //path = $" {Directory.GetCurrentDirectory()}{@"\wwwroot\FilesTo"}";

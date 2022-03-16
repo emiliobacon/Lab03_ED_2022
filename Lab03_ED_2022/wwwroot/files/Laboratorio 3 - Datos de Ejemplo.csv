@@ -1,4 +1,4 @@
-Id,Email,FullName,CarColor,CarModel,SerialNo
+ID,email,propietario,color,marca,serie
 723-24-3860,Nina_Cadman6038@brety.org,Nina Cadman,White,Audi R8,a8301df3-a381-4b57-9ee5-302c0694db99
 702-56-4820,Alan_Poole950@naiker.biz,Alan Poole,Auburn,Hyundai Santa Fe,37939e46-6094-46a6-ab60-ee9b02a38e42
 227-76-2616,Nina_Emmett9290@nimogy.biz,Nina Emmett,Emerald,Mitsubishi Lancer,9827f3f6-c794-4f41-9467-14594d25b4e2
@@ -99,3 +99,4 @@ Id,Email,FullName,CarColor,CarModel,SerialNo
 383-25-8456,Johnathan_Wade5087@vetan.org,Johnathan Wade,Orange,BMW X5,800ac7a0-9010-49fb-89ef-c6a089b76262
 466-73-2646,Anthony_Gosling667@sheye.org,Anthony Gosling,Silver,Dacia Sandero,b2a3235e-2544-413f-b9ba-5a4004cdefb6
 853-43-7430,Danny_Weatcroft4699@bulaffy.com,Danny Weatcroft,Orange,Dacia Duster,9a863371-7d3a-4751-bf75-d1c4ac5b3a7e
+
