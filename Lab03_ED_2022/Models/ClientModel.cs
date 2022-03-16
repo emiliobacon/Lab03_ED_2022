@@ -23,12 +23,14 @@ namespace Lab03_ED_2022.Models
 
         public static bool Save(ClientModel data)
         {
-            Data.miArbolId.InsertarNodo(data, Comparison.Comparison.CompararID);
-            Data.miArbolEmail.InsertarNodo(data, Comparison.Comparison.CompararEmail);
-            Data.miArbolSerial.InsertarNodo(data, Comparison.Comparison.CompararSerial);
+            Data.Instance.miArbolId.InsertarNodo(data);
+            Data.Instance.miArbolEmail.InsertarNodo(data);
+            Data.Instance.miArbolSerial.InsertarNodo(data);
             return true;
         }
 
-        
+       
+
+
     }
 }

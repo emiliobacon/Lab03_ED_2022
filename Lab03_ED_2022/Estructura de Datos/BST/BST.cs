@@ -1,5 +1,4 @@
 ﻿using Lab03_ED_2022.Comparison;
-using Lab03_ED_2022.Pila;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,6 +6,7 @@ namespace Lab03_ED_2022.BST
 {
     public class BST<T> : IEnumerable<T>, IEnumerable
     {
+        public Compare<T> comparar { get; set; }
 
         Nodo<T> raiz = new Nodo<T>();
         Nodo<T> actual = new Nodo<T>();
@@ -17,57 +17,48 @@ namespace Lab03_ED_2022.BST
 
         Nodo<T> maxNodo = new Nodo<T>();
 
-        public void InsertarNodo(T data, Compare<T> comparar)
+        public void InsertarNodo(T data)
         {
             Nodo<T> nuevoNodo = new Nodo<T>();
-
             nuevoNodo.Data = data;
 
-
-
-            if (raiz.Data == null) //cambiar a  recursivo 
+            if (raiz.Data == null)
             {
                 raiz = nuevoNodo;
             }
             else
             {
-                actual = raiz;
-
-                while (true)
-                {
-                    tempPadre = actual;
-
-                    if (comparar(nuevoNodo.Data, actual.Data) < 0)
-                    {
-                        actual = actual.Izquierda;
-                        if (actual == null)
-                        {
-                            tempPadre.Izquierda = nuevoNodo;
-                            nuevoNodo.Padre = tempPadre;
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        actual = actual.Derecha;
-                        if (actual == null)
-                        {
-                            tempPadre.Derecha = nuevoNodo;
-                            nuevoNodo.Padre = tempPadre;
-                            return;
-                        }
-                    }
-                }
+                raiz = this.InsertarNodo(raiz, nuevoNodo);
             }
-
         }
 
-        public T Buscar(T valor, Compare<T> comparar)
+        private Nodo<T> InsertarNodo(Nodo<T> raizActual, Nodo<T> nuevoNodo)
         {
-            return Buscar(valor, raiz, comparar);
+            if (raizActual != null)
+            {
+                if (comparar(raizActual.Data, raizActual.Data)<0)
+                {
+                    raizActual.Izquierda = InsertarNodo(raizActual.Izquierda, nuevoNodo);
+                }
+                else if (comparar(raizActual.Data,raizActual.Data)>0)
+                {
+                    raizActual.Derecha = InsertarNodo(raizActual.Derecha, nuevoNodo);
+                }
+                return raizActual;
+            }
+            else
+            {
+                raizActual = nuevoNodo;
+                return raizActual;
+            }
         }
 
-        private T Buscar(T elemento, Nodo<T> raiz, Compare<T> comparar)
+        public T Buscar(T valor)
+        {
+            return Buscar(valor, raiz);
+        }
+
+        private T Buscar(T elemento, Nodo<T> raiz)
         {
             actual = raiz;
 
@@ -81,11 +72,11 @@ namespace Lab03_ED_2022.BST
             }
             else if (comparar(elemento, actual.Data) < 0)
             {
-                return Buscar(elemento, actual.Izquierda, comparar);
+                return Buscar(elemento, actual.Izquierda);
             }
             else
             {
-                return Buscar(elemento, actual.Derecha, comparar);
+                return Buscar(elemento, actual.Derecha);
             }
         }
 
@@ -191,49 +182,12 @@ namespace Lab03_ED_2022.BST
         }
 
 
-        //public  T inOrder(Nodo<T> padre)
-        //{
-        //    padre = raiz;
 
-        //    if (padre != null)
-        //    {
-        //        inOrder(padre.Izquierda);
-        //         yield return = padre.Data;
-        //        inOrder(padre.Derecha);
-        //    }
-        //    return default(T);
-          
-        //}
-         
-        
+
+
 
         public IEnumerator<T> GetEnumerator()
         {
-            //if (raiz.Data != null)
-            //{
-
-            //    Pila<Nodo<T>> s = new Pila<Nodo<T>>();
-
-            //    Nodo<T> actual = raiz;
-
-
-            //    while (actual != null )
-            //    {
-            //        while (actual != null)
-            //        {
-            //            s.Insertar(actual);
-            //            actual = actual.Izquierda;
-            //        }
-
-            //        actual = s.Quitar();
-
-
-            //        yield return actual.Data;
-
-            //        actual = actual.Derecha;
-            //    }
-            //}
-
             Nodo<T> nodo = raiz;
 
             yield return nodo.Data;

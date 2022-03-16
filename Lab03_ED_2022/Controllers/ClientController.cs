@@ -15,15 +15,15 @@ namespace Lab03_ED_2022.Controllers
         // GET: ClientController
         public ActionResult Index()
         {
-            return View(Data.miArbolEmail);
+            return View(Data.Instance.miArbolEmail);
         }
         public ActionResult Index2()
         {
-            return View(Data.miArbolId);
+            return View(Data.Instance.miArbolId);
         }
         public ActionResult Index3()
         {
-            return View(Data.miArbolSerial);
+            return View(Data.Instance.miArbolSerial);
         }
 
         //busqueda por correo
@@ -41,7 +41,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["Email"]);
 
-                return View(Data.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro), Comparison.Comparison.CompararEmail));
+                return View(Data.Instance.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro)));
             }
             catch
             {
@@ -64,7 +64,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 int parametro = (int.Parse(collection["Id"]));
 
-                return View(Data.miArbolId.Buscar(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
+                return View(Data.Instance.miArbolId.Buscar(Comparison.Comparison.CompararID(parametro)));
             }
             catch
             {
@@ -87,7 +87,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["SerialNo"]);
 
-                return View(Data.miArbolSerial.Buscar(Comparison.Comparison.CompararSerial(parametro), Comparison.Comparison.CompararSerial));
+                return View(Data.Instance.miArbolSerial.Buscar(Comparison.Comparison.CompararSerial(parametro)));
             }
             catch
             {
@@ -177,6 +177,8 @@ namespace Lab03_ED_2022.Controllers
             }
         }
 
+       
+
         // GET: ClientController/Edit/5
         public ActionResult Edit(int id)
         {
@@ -224,7 +226,7 @@ namespace Lab03_ED_2022.Controllers
         public IActionResult Index(BST<ClientModel> clients = null)
         {
             clients = clients == null ? new BST<ClientModel>() : clients;
-            return View(Data.miArbolEmail);
+            return View(Data.Instance.miArbolEmail);
         }
 
         [HttpPost]
@@ -258,9 +260,12 @@ namespace Lab03_ED_2022.Controllers
                 {
                     var clients = csv.GetRecord<ClientModel>(); //modificado aqui
 
-                    Data.miArbolEmail.InsertarNodo(clients, Comparison.Comparison.CompararEmail);
-                    Data.miArbolId.InsertarNodo(clients, Comparison.Comparison.CompararID);
-                    Data.miArbolSerial.InsertarNodo(clients, Comparison.Comparison.CompararSerial);
+                    Data.Instance.miArbolEmail.InsertarNodo(clients);
+                    Data.Instance.miArbolId.InsertarNodo(clients);
+                    Data.Instance.miArbolSerial.InsertarNodo(clients);
+
+
+                    
                 }
             }
             //
