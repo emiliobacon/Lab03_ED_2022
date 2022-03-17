@@ -33,6 +33,7 @@ namespace Lab03_ED_2022.Models
             Data.Instance.miArbolId.InsertarNodo(data);
             Data.Instance.miArbolEmail.InsertarNodo(data);
             Data.Instance.miArbolSerial.InsertarNodo(data);
+         
             return true;
         }
 

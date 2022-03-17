@@ -8,6 +8,13 @@
     Ordenado por DPI 
 </h1>
 
+<header>
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Create">| Crear |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index3">| Ordenado Serial |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index">| Ordenado Email |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Create5">| Búsqueda |</a> @*cambio para estar en espanol*@
+</header>
+
 
 <table class="table">
     <thead>
@@ -54,11 +61,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SerialNo)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+            
         </tr>
 }
     </tbody>

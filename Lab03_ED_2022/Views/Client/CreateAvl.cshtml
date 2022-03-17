@@ -5,6 +5,24 @@
 }
 
 <h1>Crear nuevo modelo con AVL</h1>
+<header>
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index4">| Ordenado ID |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index5">| Ordenado Email |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index6">| Ordenado Serial |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Create7">| Búsqueda |</a> @*cambio para estar en espanol*@
+</header>
+
+<p>
+    <b>Cargar  desde CSV</b>
+</p>
+<form asp-controller="Client" asp-action="Index4" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <br />
+    <br />
+    <button type="submit">Cargar</button>
+    <hr />
+</form>
+
 
 <h4>Nuevo Vehículo</h4>
 <hr />

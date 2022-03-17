@@ -6,6 +6,25 @@
 
 <h1>Crear</h1>
 
+<header>
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index2">| Ordenado ID |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index3">| Ordenado Serial |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index">| Ordenado Email |</a> @*cambio para estar en espanol*@
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Create5">| Búsqueda |</a> @*cambio para estar en espanol*@
+</header>
+
+
+<p>
+    <b>Cargar  desde CSV</b>
+</p>
+<form asp-controller="Client" asp-action="Index" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <br />
+    <br />
+    <button type="submit">Cargar</button>
+    <hr />
+</form>
+
 
 
 <h4>Nuevo Vehículo</h4>

@@ -2,12 +2,16 @@
 using Lab03_ED_2022.Estructura_de_Datos;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 namespace Lab03_ED_2022.BST
 {
     public class BST<T> : IEnumerable<T>, IEnumerable
     {
+        
+        
         public Compare<T> comparar { get; set; }
+
+       
 
         Nodo<T> raiz = new Nodo<T>();
         Nodo<T> actual = new Nodo<T>();
@@ -80,14 +84,17 @@ namespace Lab03_ED_2022.BST
             }
             else if (comparar(elemento, actual.Data) == 0)
             {
+                
                 return actual.Data;
             }
             else if (comparar(elemento, actual.Data) < 0)
             {
+                
                 return Buscar(elemento, actual.Izquierda);
             }
             else
             {
+                
                 return Buscar(elemento, actual.Derecha);
             }
         }
@@ -193,6 +200,25 @@ namespace Lab03_ED_2022.BST
             return raiz;
         }
 
+        //profundidad
+        public static int altura = 0;
+        private void RetornarAltura(Nodo<T> reco, int nivel)
+        {
+            if (reco != null)
+            {
+                RetornarAltura(reco.Izquierda, nivel + 1);
+                if (nivel > altura)
+                    altura = nivel;
+                RetornarAltura(reco.Derecha, nivel + 1);
+            }
+        }
+
+        public int RetornarAltura()
+        {
+            altura = 0;
+            RetornarAltura(raiz, 1);
+            return altura;
+        }
 
         private void InOrder(Nodo<T> padre, ref ColaRecorrido<T> queue)
         {
@@ -205,9 +231,6 @@ namespace Lab03_ED_2022.BST
             }
             return;
         }
-
-
-
 
         public IEnumerator<T> GetEnumerator()
         {

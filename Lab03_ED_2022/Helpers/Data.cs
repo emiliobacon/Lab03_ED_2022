@@ -26,6 +26,7 @@ namespace Lab03_ED_2022.Helpers
         public BST<ClientModel> miArbolId = new BST<ClientModel>
         {
             comparar = Comparison.Comparison.CompararID
+            
         };
 
 
