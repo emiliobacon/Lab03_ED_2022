@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab03_ED_2022.Comparison;
-using Lab03_ED_2022.Pila;
-
+using Lab03_ED_2022.Estructura_de_Datos;
 
 namespace Lab03_ED_2022.Estructuras_de_datos
 {
     public class AVLtree<T> : IEnumerable<T>, IEnumerable  // interfaz
     {
+        public Compare<T> comparar { get; set; }
+
         //Varible
         AVLnode<T> root;
 
@@ -24,7 +25,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
         /*Metodo de insertar un nuevo nodo (inserción).
          * Cuando no existe raíz en el árbol
          */
-        public void insert(T value, Compare<T> comparar)
+        public void insert(T value)
         {
             AVLnode<T> newNode = new AVLnode<T>(value);
 
@@ -34,17 +35,17 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             }
             else
             {
-                this.root = this.insertNode(this.root, newNode, comparar);
+                this.root = this.insertNode(this.root, newNode);
             }
         }
 
-        public AVLnode<T> insertNode(AVLnode<T> actualroot, AVLnode<T> newNode, Compare<T> comparar) //Metodo para insertar un nodo sino 
+        public AVLnode<T> insertNode(AVLnode<T> actualroot, AVLnode<T> newNode) //Metodo para insertar un nodo sino 
         {
             if (actualroot != null)//recorrer las hojas o hijos
             {
                 if (comparar(newNode.value, actualroot.value) < 0)//Cuando es menor
                 {
-                    actualroot.left = this.insertNode(actualroot.left, newNode , comparar);//se manda a la nodo izquierdo
+                    actualroot.left = this.insertNode(actualroot.left, newNode );//se manda a la nodo izquierdo
                     //Factor de balanceo
                     if (this.node_Height(actualroot.right) - this.node_Height(actualroot.left) == -2)
                     {
@@ -62,7 +63,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
                 }
                 else if (comparar(newNode.value,actualroot.value) > 0) //cuando es mayor
                 {
-                    actualroot.right = this.insertNode(actualroot.right, newNode, comparar);//se manda a la nodo derecho
+                    actualroot.right = this.insertNode(actualroot.right, newNode);//se manda a la nodo derecho
                     if (this.node_Height(actualroot.right) - this.node_Height(actualroot.left) == 2) //validaciones de balanceo
                     {
                         //Entra a rotacion izquierda
@@ -145,12 +146,12 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             return aux_Node;
         }
 
-        public T Buscar(T valor, Compare<T> comparar)
+        public T Buscar(T valor)
         {
-            return Buscar(valor, root, comparar);
+            return Buscar(valor, root);
         }
 
-        private T Buscar(T elemento, AVLnode<T> raiz, Compare<T> comparar)
+        private T Buscar(T elemento, AVLnode<T> raiz)
         {
             AVLnode<T> aux_Node = raiz;
 
@@ -164,38 +165,43 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             }
             else if (comparar(elemento, aux_Node.value) < 0)
             {
-                return Buscar(elemento, aux_Node.left, comparar);
+                return Buscar(elemento, aux_Node.left);
             }
             else
             {
-                return Buscar(elemento, aux_Node.right, comparar);
+                return Buscar(elemento, aux_Node.right);
             }
         }
 
-        private void InOrder(AVLnode<T> root, ref Pila<T> queue)
+        private void InOrder(AVLnode<T> padre, ref ColaRecorrido<T> queue)
         {
-            if(root != null)
-            {
-                InOrder(root.left, ref queue);
-                queue.Insertar(root.value);
-                InOrder(root.right, ref queue);
 
+            if (padre != null)
+            {
+                InOrder(padre.left, ref queue);
+                queue.Encolar(padre.value);
+                InOrder(padre.right, ref queue);
             }
+            return;
         }
+
         public IEnumerator<T> GetEnumerator()
         {
-            var queue = new Pila<T>();
-            InOrder(this.root, ref queue);
+            var queue = new ColaRecorrido<T>();
+            InOrder(root, ref queue);
 
-            while (!queue.IsEmpty())
+            while (!queue.ColaVacia())
             {
-                yield return queue.QuitarUltimo();
+                yield return queue.DesEncolar();
             }
+
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+
+
     }
 }

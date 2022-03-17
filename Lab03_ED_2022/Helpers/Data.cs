@@ -23,15 +23,37 @@ namespace Lab03_ED_2022.Helpers
             }
         }
 
-        public BST<ClientModel> miArbolId = new BST<ClientModel>(); //anadir singleton, quitar variable statica
+        public BST<ClientModel> miArbolId = new BST<ClientModel>
+        {
+            comparar = Comparison.Comparison.CompararID
+            
+        };
 
-        public BST<ClientModel> miArbolSerial = new BST<ClientModel>();
 
-        public BST<ClientModel> miArbolEmail = new BST<ClientModel>();
+        public BST<ClientModel> miArbolSerial = new BST<ClientModel>
+        {
+            comparar = Comparison.Comparison.CompararSerial
+        };
 
-        public AVLtree<ClientModel> miArbolAvlId = new AVLtree<ClientModel>();
-        public AVLtree<ClientModel> miArbolAvlSerial = new AVLtree<ClientModel>();
-        public AVLtree<ClientModel> miArbolAvlEmail = new AVLtree<ClientModel>();
+        public BST<ClientModel> miArbolEmail = new BST<ClientModel>
+        {
+            comparar = Comparison.Comparison.CompararEmail
+        };
+
+
+        public AVLtree<ClientModel> miArbolAvlId = new AVLtree<ClientModel> 
+        {
+            comparar = Comparison.Comparison.CompararID
+        };
+
+        public AVLtree<ClientModel> miArbolAvlSerial = new AVLtree<ClientModel> 
+        {
+            comparar = Comparison.Comparison.CompararSerial
+        };
+        public AVLtree<ClientModel> miArbolAvlEmail = new AVLtree<ClientModel>
+        {
+            comparar = Comparison.Comparison.CompararEmail
+        };
 
 
     }

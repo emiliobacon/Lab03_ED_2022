@@ -4,17 +4,18 @@
 
 <div class="text-center">
     <h1 class="display-4">Bienvenido SAT</h1> @*cambio para estar en espanol*@
+    <br />
+    <br />
+    <h2>
+        <b>Elija el tipo de Árbol para usar</b>
+    </h2>
+    <br />
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="CreateAvl"> AVL </a> @*cambio para estar en espanol*@
 
-    <p>
-        <b>Cargar  desde CSV</b>
-    </p>
-    <form asp-controller="Client" asp-action="Index" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <br />
-        <br />
-        <button type="submit">Cargar</button>
-        <hr />
-    </form>
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Create"> BST </a> @*cambio para estar en espanol*@
+
+    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="CreateBoth"> Ambos </a> @*cambio para estar en espanol*@
+
 
 
 

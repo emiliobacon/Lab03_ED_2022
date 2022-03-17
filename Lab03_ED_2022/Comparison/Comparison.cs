@@ -6,6 +6,8 @@ namespace Lab03_ED_2022.Comparison
 
     public class Comparison
     {
+      
+
         public static int CompareString(string a, string b)
         {
             if (a != b)
@@ -48,6 +50,7 @@ namespace Lab03_ED_2022.Comparison
 
         public static int CompararID(ClientModel a, ClientModel b)
         {
+
             if (a.Id != b.Id)
             {
                 if (a.Id < b.Id)
@@ -67,6 +70,8 @@ namespace Lab03_ED_2022.Comparison
 
         public static int CompararSerial(ClientModel a, ClientModel b)
         {
+            
+
             if (a.SerialNo != b.SerialNo)
             {
                 if (a.SerialNo.CompareTo(b.SerialNo) < 0)
@@ -86,6 +91,8 @@ namespace Lab03_ED_2022.Comparison
 
         public static int CompararEmail(ClientModel a, ClientModel b)
         {
+            
+
             if (a.Email != b.Email)
             {
                 if (a.Email.CompareTo(b.Email) < 0)

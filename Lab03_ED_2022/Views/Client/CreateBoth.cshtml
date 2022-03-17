@@ -1,21 +1,17 @@
 ﻿@model Lab03_ED_2022.Models.ClientModel
 
 @{
-    ViewData["Title"] = "CreateAvl";
+    ViewData["Title"] = "CreateBoth";
 }
-
-<h1>Crear nuevo modelo con AVL</h1>
 <header>
-    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index4">| Ordenado ID |</a> @*cambio para estar en espanol*@
-    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index5">| Ordenado Email |</a> @*cambio para estar en espanol*@
-    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index6">| Ordenado Serial |</a> @*cambio para estar en espanol*@
-    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Create7">| Búsqueda |</a> @*cambio para estar en espanol*@
+
 </header>
 
+<h1>Crear en ambos Árboles</h1>
 <p>
     <b>Cargar  desde CSV</b>
 </p>
-<form asp-controller="Client" asp-action="Index4" method="post" enctype="multipart/form-data">
+<form asp-controller="Client" asp-action="IndexBoth" method="post" enctype="multipart/form-data">
     <input type="file" name="file" />
     <br />
     <br />
@@ -23,12 +19,11 @@
     <hr />
 </form>
 
-
-<h4>Nuevo Vehículo</h4>
+<h4>Carga Manual</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateAvl">
+        <form asp-action="CreateBoth">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
@@ -61,15 +56,13 @@
                 <span asp-validation-for="SerialNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index4">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

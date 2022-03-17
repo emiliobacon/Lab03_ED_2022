@@ -12,13 +12,20 @@ namespace Lab03_ED_2022.Controllers
 {
     public class ClientController : Controller
     {
+        
         // GET: ClientController
         public ActionResult Index()
         {
             return View(Data.Instance.miArbolEmail);
         }
-        public ActionResult Index2()
+
+        public ActionResult IndexBoth()
         {
+            return View(Data.Instance.miArbolEmail);
+        }
+
+        public ActionResult Index2()
+        { 
             return View(Data.Instance.miArbolId);
         }
         public ActionResult Index3()
@@ -41,7 +48,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["Email"]);
 
-                return View(Data.Instance.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro), Comparison.Comparison.CompararEmail));
+                return View(Data.Instance.miArbolEmail.Buscar(Comparison.Comparison.CompararEmail(parametro)));
             }
             catch
             {
@@ -65,7 +72,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 int parametro = (int.Parse(collection["Id"]));
 
-                return View(Data.Instance.miArbolId.Buscar(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
+                return View(Data.Instance.miArbolId.Buscar(Comparison.Comparison.CompararID(parametro)));
             }
             catch
             {
@@ -88,7 +95,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["SerialNo"]);
 
-                return View(Data.Instance.miArbolSerial.Buscar(Comparison.Comparison.CompararSerial(parametro), Comparison.Comparison.CompararSerial));
+                return View(Data.Instance.miArbolSerial.Buscar(Comparison.Comparison.CompararSerial(parametro)));
             }
             catch
             {
@@ -129,7 +136,7 @@ namespace Lab03_ED_2022.Controllers
                     Email = collection["Email"],
                     SerialNo = collection["SerialNo"],
                 });
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index4));
             }
             catch
             {
@@ -149,7 +156,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 int parametro = (int.Parse(collection["Id"]));
 
-                return View(Data.Instance.miArbolAvlId.Buscar(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
+                return View(Data.Instance.miArbolAvlId.Buscar(Comparison.Comparison.CompararID(parametro)));
             }
             catch
             {
@@ -169,7 +176,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["SerialNo"]);
 
-                return View(Data.Instance.miArbolAvlSerial.Buscar(Comparison.Comparison.CompararSerial(parametro), Comparison.Comparison.CompararSerial));
+                return View(Data.Instance.miArbolAvlSerial.Buscar(Comparison.Comparison.CompararSerial(parametro)));
             }
             catch
             {
@@ -189,7 +196,7 @@ namespace Lab03_ED_2022.Controllers
             {
                 string parametro = (collection["Email"]);
 
-                return View(Data.Instance.miArbolAvlEmail.Buscar(Comparison.Comparison.CompararEmail(parametro), Comparison.Comparison.CompararEmail));
+                return View(Data.Instance.miArbolAvlEmail.Buscar(Comparison.Comparison.CompararEmail(parametro)));
             }
             catch
             {
@@ -344,6 +351,8 @@ namespace Lab03_ED_2022.Controllers
             }
         }
 
+
+
         //leer csv
         [HttpGet]
         public IActionResult Index(BST<ClientModel> clients = null)
@@ -383,33 +392,160 @@ namespace Lab03_ED_2022.Controllers
                 {
                     var clients = csv.GetRecord<ClientModel>(); //modificado aqui
 
-                    Data.Instance.miArbolEmail.InsertarNodo(clients, Comparison.Comparison.CompararEmail);
-                    Data.Instance.miArbolId.InsertarNodo(clients, Comparison.Comparison.CompararID);
-                    Data.Instance.miArbolSerial.InsertarNodo(clients, Comparison.Comparison.CompararSerial);
+                    Data.Instance.miArbolEmail.InsertarNodo(clients);
+                    Data.Instance.miArbolId.InsertarNodo(clients);
+                    Data.Instance.miArbolSerial.InsertarNodo(clients);
+
+
+
+                    ////arbol avl
+
+                    //Data.Instance.miArbolAvlEmail.insert(clients);
+                    //Data.Instance.miArbolAvlId.insert(clients);
+                    //Data.Instance.miArbolAvlSerial.insert(clients);
+                }
+            }
+                return client;
+
+        }
+        
+        //cargar csv solo para arbol avl
+        //leer csv
+        [HttpGet]
+        public IActionResult Index4(BST<ClientModel> clients = null)
+        {
+            clients = clients == null ? new BST<ClientModel>() : clients;
+            return View(Data.Instance.miArbolAvlEmail);
+        }
+
+        [HttpPost]
+        public IActionResult Index4(IFormFile file, [FromServices] IHostingEnvironment hostingEnvironment)
+        {
+            // Upload CSV 
+            string fileName = $"{ hostingEnvironment.WebRootPath}\\files\\{file.FileName}";
+            using (FileStream fileStream = System.IO.File.Create(fileName))
+            {
+                file.CopyTo(fileStream);
+                fileStream.Flush();
+            }
+            //
+
+            var clients = this.GetClientListAVL(file.FileName);
+            return Index4(clients);
+        }
+
+        private BST<ClientModel> GetClientListAVL(string fileName)
+        {
+            BST<ClientModel> client = new BST<ClientModel>(); //modificado aqui tambien 
+
+            // Read CSV
+            var path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + fileName;
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+                while (csv.Read())
+                {
+                    var clients = csv.GetRecord<ClientModel>(); //modificado aqui
 
                     //arbol avl
 
-                    Data.Instance.miArbolAvlEmail.insert(clients, Comparison.Comparison.CompararEmail);
-                    Data.Instance.miArbolAvlId.insert(clients, Comparison.Comparison.CompararID);
-                    Data.Instance.miArbolAvlSerial.insert(clients, Comparison.Comparison.CompararSerial);
+                    Data.Instance.miArbolAvlEmail.insert(clients);
+                    Data.Instance.miArbolAvlId.insert(clients);
+                    Data.Instance.miArbolAvlSerial.insert(clients);
                 }
             }
-            
-            //// Create CSV
-
-            //path = $" {Directory.GetCurrentDirectory()}{@"\wwwroot\FilesTo"}";
-            //using (var write = new StreamWriter(path + "\\NewFile.csv"))
-            //using (var csv = new CsvWriter(write, CultureInfo.InvariantCulture))
-            //{
-            //    csv.WriteRecords(Data.miArbolEmail);
-            //    csv.WriteRecords(Data.miArbolId);
-            //    csv.WriteRecords(Data.miArbolSerial);
-            //}
-            ////
-
             return client;
 
         }
 
+        // GET: ClientController/Create
+        public ActionResult CreateBoth()
+        {
+            return View(new ClientModel());
+        }
+
+        // POST: ClientController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateBoth(IFormCollection collection)
+        {
+            try
+            {
+                ClientModel.SaveBoth(new ClientModel
+                {
+                    Id = int.Parse(collection["Id"]),
+                    FullName = collection["FullName"],
+                    CarColor = collection["CarColor"],
+                    CarModel = collection["CarModel"],
+                    Email = collection["Email"],
+                    SerialNo = collection["SerialNo"],
+                });
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //crear en ambos 
+
+        //leer csv
+        [HttpGet]
+        public IActionResult IndexBoth(BST<ClientModel> clients = null)
+        {
+            clients = clients == null ? new BST<ClientModel>() : clients;
+            return View(Data.Instance.miArbolAvlEmail);
+        }
+
+        [HttpPost]
+        public IActionResult IndexBoth(IFormFile file, [FromServices] IHostingEnvironment hostingEnvironment)
+        {
+            // Upload CSV 
+            string fileName = $"{ hostingEnvironment.WebRootPath}\\files\\{file.FileName}";
+            using (FileStream fileStream = System.IO.File.Create(fileName))
+            {
+                file.CopyTo(fileStream);
+                fileStream.Flush();
+            }
+            //
+
+            var clients = this.GetClientListBoth(file.FileName);
+            return IndexBoth(clients);
+        }
+
+        private BST<ClientModel> GetClientListBoth(string fileName)
+        {
+            BST<ClientModel> client = new BST<ClientModel>(); //modificado aqui tambien 
+
+            // Read CSV
+            var path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + fileName;
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+                while (csv.Read())
+                {
+                    var clients = csv.GetRecord<ClientModel>(); //modificado aqui
+
+                    //arbol avl
+
+                    Data.Instance.miArbolAvlEmail.insert(clients);
+                    Data.Instance.miArbolAvlId.insert(clients);
+                    Data.Instance.miArbolAvlSerial.insert(clients);
+
+                    //arbol bst 
+
+                    Data.Instance.miArbolEmail.InsertarNodo(clients);
+                    Data.Instance.miArbolId.InsertarNodo(clients);
+                    Data.Instance.miArbolSerial.InsertarNodo(clients);
+                }
+            }
+            return client;
+
+        }
     }
 }
