@@ -14,7 +14,7 @@ namespace Lab03_ED_2022.Models
     public class ClientModel
     {
         [Required]
-        public int Id { get; set; } //aumentar mas digitos
+        public long Id { get; set; } //aumentar mas digitos
 
         [Required]
         public string Email { get; set; }
