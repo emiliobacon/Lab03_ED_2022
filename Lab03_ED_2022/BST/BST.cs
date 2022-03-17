@@ -8,6 +8,7 @@ namespace Lab03_ED_2022.BST
     public class BST<T> : IEnumerable<T>, IEnumerable
     {
         public Compare<T> comparar { get; set; }
+        public int ComparacionesBusquedaABB = 0;
 
         Nodo<T> raiz = new Nodo<T>();
         Nodo<T> actual = new Nodo<T>();
@@ -76,18 +77,22 @@ namespace Lab03_ED_2022.BST
 
             if (actual == null)
             {
+                ComparacionesBusquedaABB++;
                 return default(T);
             }
             else if (comparar(elemento, actual.Data) == 0)
             {
+                ComparacionesBusquedaABB++;
                 return actual.Data;
             }
             else if (comparar(elemento, actual.Data) < 0)
             {
+                ComparacionesBusquedaABB++;
                 return Buscar(elemento, actual.Izquierda);
             }
             else
             {
+                ComparacionesBusquedaABB++;
                 return Buscar(elemento, actual.Derecha);
             }
         }
@@ -102,71 +107,6 @@ namespace Lab03_ED_2022.BST
             }
             return actual;
         }
-
-        ////public Nodo<T> BorrarNodo(T llave, Compare<T> comparar)
-        ////{
-        ////    tempBorrar.Data = Buscar(llave, comparar); //arreglar eliminacion 
-
-        ////    if (raiz != null)
-        ////    {
-        ////        if (comparar(llave, raiz.Data) == -1)
-        ////        {
-        ////            raiz.Izquierda = BorrarNodo(raiz.Izquierda, llave);
-        ////        }
-        ////        else if (comparar(llave, raiz.Data) == 1)
-        ////        {
-
-        ////        }
-        ////        else
-        ////        {
-
-        ////        }
-        ////        if ((tempBorrar.Izquierda == null) && (tempBorrar.Derecha == null))
-        ////        {
-        ////            tempPadre = tempBorrar.Padre;
-        ////            if (comparar(tempBorrar.Data,tempPadre.Izquierda)==0)
-        ////            {
-        ////                tempPadre.Izquierda = null;
-        ////            }
-        ////            else
-        ////            {
-        ////                tempPadre.Derecha = null;
-        ////            }
-        ////        }
-        ////        else if ((tempBorrar.Izquierda == null) || (tempBorrar.Derecha == null))
-        ////        {
-        ////            tempHijo = tempBorrar.Izquierda == null ? tempBorrar.Derecha : tempBorrar.Izquierda;
-        ////            tempPadre = tempBorrar.Padre;
-        ////            if (tempBorrar == tempPadre.Izquierda)
-        ////            {
-        ////                tempPadre.Izquierda = tempHijo;
-        ////            }
-        ////            else
-        ////            {
-        ////                tempPadre.Derecha = tempHijo;
-        ////            }
-
-        ////        }
-        ////        else if ((tempBorrar.Izquierda != null) && (tempBorrar.Derecha != null))
-        ////        {
-        ////            maxNodo = Max(tempBorrar.Derecha);
-
-        ////            tempBorrar.Data = maxNodo.Data;
-
-        ////            BorrarNodo((tempBorrar.Derecha), maxNodo.Data, comparar);
-
-        ////        }
-        ////        return true;
-        ////    }
-        ////    else
-        ////    {
-        ////        return false;
-        ////    }
-
-
-
-
-        ////}
 
         public Nodo<T> BorrarNodo(Nodo<T> raiz, T llave, Compare<T> comparar)
         {
@@ -193,7 +133,6 @@ namespace Lab03_ED_2022.BST
             return raiz;
         }
 
-
         private void InOrder(Nodo<T> padre, ref ColaRecorrido<T> queue)
         {
 
@@ -205,10 +144,6 @@ namespace Lab03_ED_2022.BST
             }
             return;
         }
-
-
-
-
         public IEnumerator<T> GetEnumerator()
         {
             var queue = new ColaRecorrido<T>();
@@ -226,7 +161,12 @@ namespace Lab03_ED_2022.BST
             return GetEnumerator();
         }
 
-        //actualizado 
+        //actualizado
+
+        public int ComparacionesABB()
+        {
+            return ComparacionesBusquedaABB;
+        }
 
     }
 }

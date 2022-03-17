@@ -5,13 +5,21 @@ using Lab03_ED_2022.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Text;
 
 namespace Lab03_ED_2022.Controllers
 {
     public class ClientController : Controller
     {
+        public static Stopwatch timeCounter0 = new Stopwatch();
+        public static Stopwatch timeCounter1 = new Stopwatch();
+        public double xAvl = 0;
+        public double xABB = 0;
+       
         // GET: ClientController
         public ActionResult Index()
         {
@@ -25,7 +33,7 @@ namespace Lab03_ED_2022.Controllers
         {
             return View(Data.Instance.miArbolSerial);
         }
-       
+
         //busqueda por correo
         public ActionResult Create2()
         {
@@ -243,28 +251,7 @@ namespace Lab03_ED_2022.Controllers
             }
         }
 
-        //eliminacion 
-        //public ActionResult Create6()
-        //{
-        //    //formulario para busquedas
-        //    return View(new ClientModel());
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create6(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        int parametro = (int.Parse(collection["Id"]));
-
-        //        return View(Data.miArbolEmail.BorrarNodo(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        
 
         // GET: ClientController/Details/5
         public ActionResult Details(int id)
@@ -382,34 +369,69 @@ namespace Lab03_ED_2022.Controllers
                 while (csv.Read())
                 {
                     var clients = csv.GetRecord<ClientModel>(); //modificado aqui
-
+                    timeCounter0.Start();
                     Data.Instance.miArbolEmail.InsertarNodo(clients);
                     Data.Instance.miArbolId.InsertarNodo(clients);
                     Data.Instance.miArbolSerial.InsertarNodo(clients);
+                    timeCounter0.Stop();
+                    xABB += timeCounter0.Elapsed.TotalMilliseconds;
 
                     //arbol avl
-
+                    timeCounter1.Start();
                     Data.Instance.miArbolAvlEmail.insert(clients);
                     Data.Instance.miArbolAvlId.insert(clients);
                     Data.Instance.miArbolAvlSerial.insert(clients);
+                    timeCounter1.Stop();
+                    xAvl += timeCounter1.Elapsed.TotalMilliseconds;
+
                 }
+              
             }
-            
-            //// Create CSV
-
-            //path = $" {Directory.GetCurrentDirectory()}{@"\wwwroot\FilesTo"}";
-            //using (var write = new StreamWriter(path + "\\NewFile.csv"))
-            //using (var csv = new CsvWriter(write, CultureInfo.InvariantCulture))
-            //{
-            //    csv.WriteRecords(Data.miArbolEmail);
-            //    csv.WriteRecords(Data.miArbolId);
-            //    csv.WriteRecords(Data.miArbolSerial);
-            //}
-            ////
-
             return client;
+        }
+        public ActionResult EstadisticasAvl(IFormCollection collection)
+        {
+            try
+            {
+                Data.Instance.miArbolAvlEmail.Profundidad();
+                Data.Instance.miArbolAvlId.Profundidad();
+                Data.Instance.miArbolAvlSerial.Profundidad();
 
+                Data.Instance.miArbolAvlEmail.Comparaciones();
+                Data.Instance.miArbolAvlId.Comparaciones();
+                Data.Instance.miArbolAvlSerial.Comparaciones();
+
+                Data.Instance.miArbolAvlEmail.Rotaciones();
+                Data.Instance.miArbolAvlId.Rotaciones();
+                Data.Instance.miArbolAvlSerial.Rotaciones();
+
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
 
+        public IActionResult Estadisticaas()
+        {
+            ViewData["Avl"] = "Tiempo de carga del los árboles avl: "+ timeCounter1.Elapsed.TotalMilliseconds;
+            ViewData["ABB"] = "Tiempo de carga del los árboles abb: " + timeCounter0.Elapsed.TotalMilliseconds;
+            ViewData["BusAvlID"] = "Comparaciones necesarias para AVL ID" + Data.Instance.miArbolAvlId.Comparaciones();
+            ViewData["BusAvlEMAIL"] = "Comparaciones necesarias para AVL EMAIL" + Data.Instance.miArbolAvlEmail.Comparaciones();
+            ViewData["BusAvlSERIAL"] = "Comparaciones necesarias para AVL SERIAL" + Data.Instance.miArbolAvlSerial.Comparaciones();
+
+            ViewData["PRAvlID"] = "Profundida AVL ID" + Data.Instance.miArbolAvlId.Profundidad();
+            ViewData["PRAvlEMAIL"] = "Profundida AVL EMAIL" + Data.Instance.miArbolAvlEmail.Profundidad();
+            ViewData["PRAvlSERIAL"] = "Profundida AVL  SERIAL" + Data.Instance.miArbolAvlSerial.Profundidad();
+
+
+
+
+
+
+            return View();
+
+        }
     }
 }
