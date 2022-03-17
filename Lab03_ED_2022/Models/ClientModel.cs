@@ -37,6 +37,19 @@ namespace Lab03_ED_2022.Models
             return true;
         }
 
+        public static bool SaveBoth(ClientModel data)
+        {
+            Data.Instance.miArbolId.InsertarNodo(data);
+            Data.Instance.miArbolEmail.InsertarNodo(data);
+            Data.Instance.miArbolSerial.InsertarNodo(data);
+
+            Data.Instance.miArbolAvlId.insert(data);
+            Data.Instance.miArbolAvlEmail.insert(data);
+            Data.Instance.miArbolAvlSerial.insert(data);
+
+            return true;
+        }
+
         public static bool SaveAVLMode(ClientModel data)
         {
             Data.Instance.miArbolAvlId.insert(data);

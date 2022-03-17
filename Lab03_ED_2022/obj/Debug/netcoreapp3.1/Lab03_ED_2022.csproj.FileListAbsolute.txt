@@ -514,3 +514,5 @@ C:\Users\emili\Desktop\Branch Emilio\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netco
 C:\Users\emili\Desktop\Branch Emilio\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Lab03_ED_2022.dll
 C:\Users\emili\Desktop\Branch Emilio\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Lab03_ED_2022.pdb
 C:\Users\emili\Desktop\Branch Emilio\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Lab03_ED_2022.genruntimeconfig.cache
+C:\Users\emili\Desktop\Branch Emilio\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\CreateBoth.cshtml.g.cs
+C:\Users\emili\Desktop\Branch Emilio\Lab03_ED_2022\Lab03_ED_2022\obj\Debug\netcoreapp3.1\Razor\Views\Client\IndexBoth.cshtml.g.cs
