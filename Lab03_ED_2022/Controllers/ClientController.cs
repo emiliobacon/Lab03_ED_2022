@@ -552,6 +552,10 @@ namespace Lab03_ED_2022.Controllers
             ViewData["PAvlEMAIL"] = "Profundida AVL EMAIL:  " + Data.Instance.miArbolAvlEmail.Profundidad();
             ViewData["PAvlSERIAL"] = "Profundida AVL  SERIAL:  " + Data.Instance.miArbolAvlSerial.Profundidad();
 
+            ViewData["PABBID"] = "Profundida ABB  ID:  " + Data.Instance.miArbolId.RetornarAltura();
+            ViewData["PABBSERIAL"] = "Profundida ABB  SERIAL:  " + Data.Instance.miArbolSerial.RetornarAltura();
+            ViewData["PABBEMAIL"] = "Profundida ABB  EMAIL:  " + Data.Instance.miArbolEmail.RetornarAltura();
+
             ViewData["TAvlSERIAL"] = "Tiempo de ordenamiento AVL  SERIAL:  " + Data.Instance.miArbolAvlSerial.TiempoDeOrdenamientoAvl();
             ViewData["TAvlID"] = "Tiempo de ordenamiento AVL EMAIL:  " + Data.Instance.miArbolAvlEmail.TiempoDeOrdenamientoAvl();
             ViewData["TAvlEMAIL"] = "Tiempo de ordenamiento AVL ID:  " + Data.Instance.miArbolAvlId.TiempoDeOrdenamientoAvl();
