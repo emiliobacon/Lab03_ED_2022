@@ -6293,11 +6293,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emili\\Desktop\\Lab03_ED_2022-main\\Lab03_ED_2022\\Lab03_ED_2022.csproj",
+      "projectUniqueName": "C:\\Users\\emili\\Desktop\\Branch Emilio\\Lab03_ED_2022\\Lab03_ED_2022\\Lab03_ED_2022.csproj",
       "projectName": "Lab03_ED_2022",
-      "projectPath": "C:\\Users\\emili\\Desktop\\Lab03_ED_2022-main\\Lab03_ED_2022\\Lab03_ED_2022.csproj",
+      "projectPath": "C:\\Users\\emili\\Desktop\\Branch Emilio\\Lab03_ED_2022\\Lab03_ED_2022\\Lab03_ED_2022.csproj",
       "packagesPath": "C:\\Users\\emili\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emili\\Desktop\\Lab03_ED_2022-main\\Lab03_ED_2022\\obj\\",
+      "outputPath": "C:\\Users\\emili\\Desktop\\Branch Emilio\\Lab03_ED_2022\\Lab03_ED_2022\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\emili\\AppData\\Roaming\\NuGet\\NuGet.Config",
