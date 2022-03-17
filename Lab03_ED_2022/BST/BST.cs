@@ -2,70 +2,114 @@
 using Lab03_ED_2022.Estructura_de_Datos;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 namespace Lab03_ED_2022.BST
 {
     public class BST<T> : IEnumerable<T>, IEnumerable
     {
-        
-        
+
+
         public Compare<T> comparar { get; set; }
 
-       
 
-        Nodo<T> raiz = new Nodo<T>();
-        Nodo<T> actual = new Nodo<T>();
-        Nodo<T> tempPadre = new Nodo<T>();
-        Nodo<T> tempBorrar = new Nodo<T>();
-        Nodo<T> tempHijo = new Nodo<T>();
-        Nodo<T> sortOrder = new Nodo<T>();
 
-        Nodo<T> maxNodo = new Nodo<T>();
+        Nodo<T> raiz;
+        public BST()
+        {
+            this.raiz = null;
+        }
+
+        //Nodo<T> actual = new Nodo<T>();
+        //Nodo<T> tempPadre = new Nodo<T>();
+        //Nodo<T> tempBorrar = new Nodo<T>();
+        //Nodo<T> tempHijo = new Nodo<T>();
+        //Nodo<T> sortOrder = new Nodo<T>();
+        //Nodo<T> maxNodo = new Nodo<T>();
+
 
         public void InsertarNodo(T data)
         {
-            Nodo<T> nuevoNodo = new Nodo<T>();
+            Nodo<T> newNode = new Nodo<T>(data);
+            
 
-            nuevoNodo.Data = data;
-
-
-
-            if (raiz.Data == null) //cambiar a  recursivo 
+            if (this.raiz == null)
             {
-                raiz = nuevoNodo;
+                this.raiz = newNode;
             }
             else
             {
-                actual = raiz;
-
-                while (true)
-                {
-                    tempPadre = actual;
-
-                    if (comparar(nuevoNodo.Data, actual.Data) < 0)
-                    {
-                        actual = actual.Izquierda;
-                        if (actual == null)
-                        {
-                            tempPadre.Izquierda = nuevoNodo;
-                            nuevoNodo.Padre = tempPadre;
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        actual = actual.Derecha;
-                        if (actual == null)
-                        {
-                            tempPadre.Derecha = nuevoNodo;
-                            nuevoNodo.Padre = tempPadre;
-                            return;
-                        }
-                    }
-                }
+                raiz = this.InsertarNodo(raiz, newNode);
             }
-
         }
+
+        private Nodo<T> InsertarNodo(Nodo<T> actualroot, Nodo<T> newNode) //Metodo para insertar un nodo sino 
+        {
+            if (actualroot != null)//recorrer las hojas o hijos
+            {
+                if (comparar(newNode.Data, actualroot.Data) < 0)//Cuando es menor
+                {
+                    actualroot.Izquierda = this.InsertarNodo(actualroot.Izquierda, newNode);//se manda a la nodo izquierdo
+                   
+                }
+                else if (comparar(newNode.Data, actualroot.Data) > 0) //cuando es mayor
+                {
+                    actualroot.Derecha = this.InsertarNodo(actualroot.Derecha, newNode);//se manda a la nodo derecho
+                 
+                }
+                else { }
+               
+                return actualroot;
+            }
+            else
+            {
+                actualroot = newNode;
+                return actualroot;
+            }
+        }
+
+        //public void InsertarNodo(T data)
+        //{
+        //    Nodo<T> nuevoNodo = new Nodo<T>();
+
+        //    nuevoNodo.Data = data;
+
+
+
+        //    if (raiz.Data == null) //cambiar a  recursivo 
+        //    {
+        //        raiz = nuevoNodo;
+        //    }
+        //    else
+        //    {
+        //        actual = raiz;
+
+        //        while (true)
+        //        {
+        //            tempPadre = actual;
+
+        //            if (comparar(nuevoNodo.Data, actual.Data) < 0)
+        //            {
+        //                actual = actual.Izquierda;
+        //                if (actual == null)
+        //                {
+        //                    tempPadre.Izquierda = nuevoNodo;
+        //                    nuevoNodo.Padre = tempPadre;
+        //                    return;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                actual = actual.Derecha;
+        //                if (actual == null)
+        //                {
+        //                    tempPadre.Derecha = nuevoNodo;
+        //                    nuevoNodo.Padre = tempPadre;
+        //                    return;
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //}
 
 
 
@@ -74,28 +118,27 @@ namespace Lab03_ED_2022.BST
             return Buscar(valor, raiz);
         }
 
+       
+
         private T Buscar(T elemento, Nodo<T> raiz)
         {
-            actual = raiz;
+            Nodo<T> aux_Node = raiz;
 
-            if (actual == null)
+            if (aux_Node == null)
             {
                 return default(T);
             }
-            else if (comparar(elemento, actual.Data) == 0)
+            else if (comparar(elemento, aux_Node.Data) == 0)
             {
-                
-                return actual.Data;
+                return aux_Node.Data;
             }
-            else if (comparar(elemento, actual.Data) < 0)
+            else if (comparar(elemento, aux_Node.Data) < 0)
             {
-                
-                return Buscar(elemento, actual.Izquierda);
+                return Buscar(elemento, aux_Node.Izquierda);
             }
             else
             {
-                
-                return Buscar(elemento, actual.Derecha);
+                return Buscar(elemento, aux_Node.Derecha);
             }
         }
 

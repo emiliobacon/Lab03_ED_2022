@@ -13,5 +13,9 @@ namespace Lab03_ED_2022.BST
         public Nodo<T> Izquierda;
         public Nodo<T> Derecha;
 
+        public Nodo(T data)
+        {
+            this.Data = data;
+        }
     }
 }
