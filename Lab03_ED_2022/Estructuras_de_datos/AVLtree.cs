@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab03_ED_2022.Comparison;
@@ -11,7 +12,10 @@ namespace Lab03_ED_2022.Estructuras_de_datos
     public class AVLtree<T> : IEnumerable<T>, IEnumerable  // interfaz
     {
         public Compare<T> comparar { get; set; }
-
+        public int ContadorRotaciones = 0;
+        public int ComparacionesBusqueda = 0;
+        public static Stopwatch tiempoOrdenamientoAvl = new Stopwatch();
+        public double x = 0;
         //Varible
         AVLnode<T> root;
 
@@ -20,13 +24,14 @@ namespace Lab03_ED_2022.Estructuras_de_datos
         {
             this.root = null;
         }
-        
+
         //----------------------- Métodos ----------------------------
         /*Metodo de insertar un nuevo nodo (inserción).
          * Cuando no existe raíz en el árbol
          */
         public void insert(T value)
         {
+
             AVLnode<T> newNode = new AVLnode<T>(value);
 
             if (this.root == null)
@@ -35,8 +40,12 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             }
             else
             {
+                tiempoOrdenamientoAvl.Start();
                 this.root = this.insertNode(this.root, newNode);
+                tiempoOrdenamientoAvl.Stop();
+                x += tiempoOrdenamientoAvl.Elapsed.TotalMilliseconds;
             }
+
         }
 
         public AVLnode<T> insertNode(AVLnode<T> actualroot, AVLnode<T> newNode) //Metodo para insertar un nodo sino 
@@ -45,12 +54,12 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             {
                 if (comparar(newNode.value, actualroot.value) < 0)//Cuando es menor
                 {
-                    actualroot.left = this.insertNode(actualroot.left, newNode );//se manda a la nodo izquierdo
+                    actualroot.left = this.insertNode(actualroot.left, newNode);//se manda a la nodo izquierdo
                     //Factor de balanceo
                     if (this.node_Height(actualroot.right) - this.node_Height(actualroot.left) == -2)
                     {
                         //Entra a rotacion simple derecha
-                        if (comparar(newNode.value,actualroot.left.value) < 0)
+                        if (comparar(newNode.value, actualroot.left.value) < 0)
                         {
                             //Si L-L Rotación simple derecha
                             actualroot = this.right_Rotation(actualroot);
@@ -61,7 +70,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
                         }
                     }
                 }
-                else if (comparar(newNode.value,actualroot.value) > 0) //cuando es mayor
+                else if (comparar(newNode.value, actualroot.value) > 0) //cuando es mayor
                 {
                     actualroot.right = this.insertNode(actualroot.right, newNode);//se manda a la nodo derecho
                     if (this.node_Height(actualroot.right) - this.node_Height(actualroot.left) == 2) //validaciones de balanceo
@@ -78,7 +87,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
                         }
                     }
                 }
-                else {}
+                else { }
                 actualroot.height = this.max_Height(this.node_Height(actualroot.right), this.node_Height(actualroot.left)) + 1;
                 return actualroot;
             }
@@ -87,6 +96,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
                 actualroot = newNode;
                 return actualroot;
             }
+
         }
 
         //Para retornar la altura de los nodos
@@ -122,6 +132,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             aux_Node.right = node;
             node.height = this.max_Height(this.node_Height(node.right), this.node_Height(node.left)) + 1;
             aux_Node.height = this.max_Height(node.height, this.node_Height(node.left)) + 1;
+            ContadorRotaciones++;
             return aux_Node;
         }
         public AVLnode<T> left_Rotation(AVLnode<T> node) //rotacion simple derecha
@@ -131,6 +142,7 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             aux_Node.left = node;
             node.height = this.max_Height(this.node_Height(node.left), this.node_Height(node.right)) + 1;
             aux_Node.height = this.max_Height(node.height, this.node_Height(node.right)) + 1;
+            ContadorRotaciones++;
             return aux_Node;
         }
         public AVLnode<T> left_Right_Rotation(AVLnode<T> node) //rotacion izquierda - derecha
@@ -157,18 +169,22 @@ namespace Lab03_ED_2022.Estructuras_de_datos
 
             if (aux_Node == null)
             {
+                ComparacionesBusqueda++;
                 return default(T);
             }
             else if (comparar(elemento, aux_Node.value) == 0)
             {
+                ComparacionesBusqueda++;
                 return aux_Node.value;
             }
             else if (comparar(elemento, aux_Node.value) < 0)
             {
+                ComparacionesBusqueda++;
                 return Buscar(elemento, aux_Node.left);
             }
             else
             {
+                ComparacionesBusqueda++;
                 return Buscar(elemento, aux_Node.right);
             }
         }
@@ -202,6 +218,25 @@ namespace Lab03_ED_2022.Estructuras_de_datos
             return GetEnumerator();
         }
 
+        public int Rotaciones()
+        {
+            return ContadorRotaciones;
+        }
 
+        public int Profundidad()
+        {
+            return this.root.height;
+        }
+
+        public int Comparaciones()
+        {
+            return ComparacionesBusqueda;
+        }
+
+        public double TiempoDeOrdenamientoAvl()
+        {
+
+            return x;
+        }
     }
 }
