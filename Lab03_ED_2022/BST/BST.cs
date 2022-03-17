@@ -2,6 +2,8 @@
 using Lab03_ED_2022.Estructura_de_Datos;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+
 namespace Lab03_ED_2022.BST
 {
     public class BST<T> : IEnumerable<T>, IEnumerable
@@ -9,6 +11,9 @@ namespace Lab03_ED_2022.BST
 
 
         public Compare<T> comparar { get; set; }
+        public static Stopwatch tiempoOrdenamientoABB = new Stopwatch();
+        public double x = 0;
+        public int ComparacionesBusquedaABB = 0;
 
 
 
@@ -37,7 +42,11 @@ namespace Lab03_ED_2022.BST
             }
             else
             {
+                tiempoOrdenamientoABB.Start();
                 raiz = this.InsertarNodo(raiz, newNode);
+                tiempoOrdenamientoABB.Stop();
+                x += tiempoOrdenamientoABB.Elapsed.TotalMilliseconds;
+
             }
         }
 
@@ -66,52 +75,6 @@ namespace Lab03_ED_2022.BST
             }
         }
 
-        //public void InsertarNodo(T data)
-        //{
-        //    Nodo<T> nuevoNodo = new Nodo<T>();
-
-        //    nuevoNodo.Data = data;
-
-
-
-        //    if (raiz.Data == null) //cambiar a  recursivo 
-        //    {
-        //        raiz = nuevoNodo;
-        //    }
-        //    else
-        //    {
-        //        actual = raiz;
-
-        //        while (true)
-        //        {
-        //            tempPadre = actual;
-
-        //            if (comparar(nuevoNodo.Data, actual.Data) < 0)
-        //            {
-        //                actual = actual.Izquierda;
-        //                if (actual == null)
-        //                {
-        //                    tempPadre.Izquierda = nuevoNodo;
-        //                    nuevoNodo.Padre = tempPadre;
-        //                    return;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                actual = actual.Derecha;
-        //                if (actual == null)
-        //                {
-        //                    tempPadre.Derecha = nuevoNodo;
-        //                    nuevoNodo.Padre = tempPadre;
-        //                    return;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //}
-
-
 
         public T Buscar(T valor)
         {
@@ -126,18 +89,22 @@ namespace Lab03_ED_2022.BST
 
             if (aux_Node == null)
             {
+                ComparacionesBusquedaABB++;
                 return default(T);
             }
             else if (comparar(elemento, aux_Node.Data) == 0)
             {
+                ComparacionesBusquedaABB++;
                 return aux_Node.Data;
             }
             else if (comparar(elemento, aux_Node.Data) < 0)
             {
+                ComparacionesBusquedaABB++;
                 return Buscar(elemento, aux_Node.Izquierda);
             }
             else
             {
+                ComparacionesBusquedaABB++;
                 return Buscar(elemento, aux_Node.Derecha);
             }
         }
@@ -294,7 +261,16 @@ namespace Lab03_ED_2022.BST
 
         //actualizado 
         //nueva acutalizacion
+        public int Comparaciones()
+        {
+            return ComparacionesBusquedaABB;
+        }
 
+        public double TiempoDeOrdenamientoABB()
+        {
+
+            return x;
+        }
     }
 }
 

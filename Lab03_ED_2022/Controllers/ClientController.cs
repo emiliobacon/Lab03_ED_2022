@@ -5,6 +5,7 @@ using Lab03_ED_2022.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -12,7 +13,9 @@ namespace Lab03_ED_2022.Controllers
 {
     public class ClientController : Controller
     {
-        
+        public static Stopwatch timeCounter0 = new Stopwatch();
+        public static Stopwatch timeCounter1 = new Stopwatch();
+        public static Stopwatch timeCounter2 = new Stopwatch();
         // GET: ClientController
         public ActionResult Index()
         {
@@ -250,28 +253,7 @@ namespace Lab03_ED_2022.Controllers
             }
         }
 
-        //eliminacion 
-        //public ActionResult Create6()
-        //{
-        //    //formulario para busquedas
-        //    return View(new ClientModel());
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create6(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        int parametro = (int.Parse(collection["Id"]));
-
-        //        return View(Data.miArbolEmail.BorrarNodo(Comparison.Comparison.CompararID(parametro), Comparison.Comparison.CompararID));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        
 
         // GET: ClientController/Details/5
         public ActionResult Details(int id)
@@ -380,7 +362,8 @@ namespace Lab03_ED_2022.Controllers
         private BST<ClientModel> GetClientList(string fileName)
         {
             BST<ClientModel> client = new BST<ClientModel>(); //modificado aqui tambien 
-
+            timeCounter0.Restart();
+            timeCounter0.Start();
             // Read CSV
             var path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + fileName;
             using (var reader = new StreamReader(path))
@@ -395,17 +378,10 @@ namespace Lab03_ED_2022.Controllers
                     Data.Instance.miArbolEmail.InsertarNodo(clients);
                     Data.Instance.miArbolId.InsertarNodo(clients);
                     Data.Instance.miArbolSerial.InsertarNodo(clients);
-
-
-
-                    ////arbol avl
-
-                    //Data.Instance.miArbolAvlEmail.insert(clients);
-                    //Data.Instance.miArbolAvlId.insert(clients);
-                    //Data.Instance.miArbolAvlSerial.insert(clients);
                 }
             }
-                return client;
+            timeCounter0.Stop();
+            return client;
 
         }
         
@@ -437,11 +413,14 @@ namespace Lab03_ED_2022.Controllers
         private BST<ClientModel> GetClientListAVL(string fileName)
         {
             BST<ClientModel> client = new BST<ClientModel>(); //modificado aqui tambien 
-
+            timeCounter1.Restart();
+            timeCounter1.Start();
+           
             // Read CSV
             var path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + fileName;
             using (var reader = new StreamReader(path))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+
             {
                 csv.Read();
                 csv.ReadHeader();
@@ -456,8 +435,9 @@ namespace Lab03_ED_2022.Controllers
                     Data.Instance.miArbolAvlSerial.insert(clients);
                 }
             }
+            timeCounter1.Stop();
             return client;
-
+            
         }
 
         // GET: ClientController/Create
@@ -519,7 +499,8 @@ namespace Lab03_ED_2022.Controllers
         private BST<ClientModel> GetClientListBoth(string fileName)
         {
             BST<ClientModel> client = new BST<ClientModel>(); //modificado aqui tambien 
-
+            timeCounter2.Restart();
+            timeCounter2.Start();
             // Read CSV
             var path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + fileName;
             using (var reader = new StreamReader(path))
@@ -544,7 +525,42 @@ namespace Lab03_ED_2022.Controllers
                     Data.Instance.miArbolSerial.InsertarNodo(clients);
                 }
             }
+           
+            timeCounter2.Stop();
             return client;
+
+        }
+        public IActionResult Estadisticaas()
+        {
+            ViewData["Avl"] = "Tiempo de carga del los árboles avl:   " + timeCounter1.Elapsed.TotalMilliseconds+ "\n";
+            ViewData["ABB"] = "Tiempo de carga del los árboles abb:   " + timeCounter0.Elapsed.TotalMilliseconds + "\n";
+            ViewData["AMBOS"] = "Tiempo de carga de ambos árboles:   " + timeCounter2.Elapsed.TotalMilliseconds + "\n";
+
+            ViewData["CAvlID"] = "Comparaciones necesarias para AVL ID:  " + Data.Instance.miArbolAvlId.Comparaciones();
+            ViewData["CAvlEMAIL"] = "Comparaciones necesarias para AVL EMAIL:  " + Data.Instance.miArbolAvlEmail.Comparaciones();
+            ViewData["CAvlSERIAL"] = "Comparaciones necesarias para AVL SERIAL:  " + Data.Instance.miArbolAvlSerial.Comparaciones();
+
+            ViewData["CABBID"] = "Comparaciones necesarias para ABB ID:  " + Data.Instance.miArbolId.Comparaciones();
+            ViewData["CABBEMAIL"] = "Comparaciones necesarias para ABB EMAIL:  " + Data.Instance.miArbolEmail.Comparaciones();
+            ViewData["CABBSERIAL"] = "Comparaciones necesarias para ABB SERIAL:  " + Data.Instance.miArbolSerial.Comparaciones();
+
+            ViewData["RAvlID"] = "Rotaciones necesarias para balancear AVL ID:  " + Data.Instance.miArbolAvlId.Rotaciones();
+            ViewData["RAvlEMAIL"] = "Rotaciones necesarias para balancear AVL EMAIL:  " + Data.Instance.miArbolAvlEmail.Rotaciones();
+            ViewData["RAvlSERIAL"] = "Rotaciones necesarias para balancear AVL SERIAL:  " + Data.Instance.miArbolAvlSerial.Rotaciones();
+
+            ViewData["PAvlID"] = "Profundida AVL ID:  " + Data.Instance.miArbolAvlId.Profundidad();
+            ViewData["PAvlEMAIL"] = "Profundida AVL EMAIL:  " + Data.Instance.miArbolAvlEmail.Profundidad();
+            ViewData["PAvlSERIAL"] = "Profundida AVL  SERIAL:  " + Data.Instance.miArbolAvlSerial.Profundidad();
+
+            ViewData["TAvlSERIAL"] = "Tiempo de ordenamiento AVL  SERIAL:  " + Data.Instance.miArbolAvlSerial.TiempoDeOrdenamientoAvl();
+            ViewData["TAvlID"] = "Tiempo de ordenamiento AVL EMAIL:  " + Data.Instance.miArbolAvlEmail.TiempoDeOrdenamientoAvl();
+            ViewData["TAvlEMAIL"] = "Tiempo de ordenamiento AVL ID:  " + Data.Instance.miArbolAvlId.TiempoDeOrdenamientoAvl();
+
+            ViewData["TABBSERIAL"] = "Tiempo de ordenamiento ABB SERIAL:  " + Data.Instance.miArbolSerial.TiempoDeOrdenamientoABB();
+            ViewData["TABBID"] = "Tiempo de ordenamiento ABB EMAIL:  " + Data.Instance.miArbolEmail.TiempoDeOrdenamientoABB();
+            ViewData["TABBEMAIL"] = "Tiempo de ordenamiento ABB ID:  " + Data.Instance.miArbolId.TiempoDeOrdenamientoABB();
+
+            return View();
 
         }
     }
