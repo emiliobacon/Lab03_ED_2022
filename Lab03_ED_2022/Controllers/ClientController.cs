@@ -391,7 +391,7 @@ namespace Lab03_ED_2022.Controllers
         public IActionResult Index4(BST<ClientModel> clients = null)
         {
             clients = clients == null ? new BST<ClientModel>() : clients;
-            return View(Data.Instance.miArbolAvlEmail);
+            return View(Data.Instance.miArbolAvlId);
         }
 
         [HttpPost]
