@@ -396,7 +396,7 @@ namespace Lab03_ED_2022.Controllers
                     Data.Instance.miArbolId.InsertarNodo(clients);
                     Data.Instance.miArbolSerial.InsertarNodo(clients);
 
-                 
+
 
                     ////arbol avl
 
