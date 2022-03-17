@@ -14,7 +14,7 @@ namespace Lab03_ED_2022.Models
     public class ClientModel
     {
         [Required]
-        public int Id { get; set; } //aumentar mas digitos
+        public long Id { get; set; } //aumentar mas digitos
 
         [Required]
         public string Email { get; set; }
@@ -33,6 +33,20 @@ namespace Lab03_ED_2022.Models
             Data.Instance.miArbolId.InsertarNodo(data);
             Data.Instance.miArbolEmail.InsertarNodo(data);
             Data.Instance.miArbolSerial.InsertarNodo(data);
+         
+            return true;
+        }
+
+        public static bool SaveBoth(ClientModel data)
+        {
+            Data.Instance.miArbolId.InsertarNodo(data);
+            Data.Instance.miArbolEmail.InsertarNodo(data);
+            Data.Instance.miArbolSerial.InsertarNodo(data);
+
+            Data.Instance.miArbolAvlId.insert(data);
+            Data.Instance.miArbolAvlEmail.insert(data);
+            Data.Instance.miArbolAvlSerial.insert(data);
+
             return true;
         }
 
